@@ -433,6 +433,29 @@ a {
   padding: 26px;
 }
 
+.teacher-details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0;
+}
+
+.teacher-details summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 20px;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.teacher-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.teacher-details-body {
+  padding: 0 0 4px;
+}
+
 .teacher-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

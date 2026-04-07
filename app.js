@@ -597,70 +597,76 @@ function renderTeacherPanel(module) {
   const toolkit = module.teacherToolkit || {};
   elements.teacherPanel.classList.remove("hidden");
   elements.teacherPanel.innerHTML = `
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Lehrpersonenmodus</p>
-        <h2>Unterrichtsarchitektur der Station</h2>
+    <details class="teacher-details">
+      <summary>Lehrpersonenansicht dieser Station öffnen</summary>
+      <div class="teacher-details-body">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Lehrpersonenmodus</p>
+            <h2>Didaktische Zusatzansicht</h2>
+          </div>
+          <p class="section-copy">
+            Die bearbeitbaren Fragen stehen oberhalb. Diese Zusatzansicht bündelt Zeitbedarf,
+            Diagnosefokus, Fehlvorstellungen und Kommentare zu jeder Aufgabe.
+          </p>
+        </div>
+        <div class="teacher-grid">
+          <article class="teacher-card">
+            <h3>Zeitbedarf</h3>
+            <p>${escapeHtml(toolkit.duration || "45 Minuten")}</p>
+          </article>
+          <article class="teacher-card">
+            <h3>Sozialformen</h3>
+            <ul class="module-list">
+              ${(toolkit.socialForms || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </article>
+          <article class="teacher-card">
+            <h3>Diagnosefokus</h3>
+            <ul class="module-list">
+              ${(toolkit.assessmentFocus || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </article>
+          <article class="teacher-card">
+            <h3>Typische Fehlvorstellungen</h3>
+            <ul class="module-list">
+              ${(toolkit.misconceptions || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+          </article>
+          <article class="teacher-card">
+            <h3>Möglicher Leistungsnachweis</h3>
+            <p>${escapeHtml(toolkit.product || "Vergleichender Kurzkommentar oder strukturierte Transferantwort.")}</p>
+          </article>
+          <article class="teacher-card">
+            <h3>Erweiterung</h3>
+            <p>${escapeHtml(toolkit.extension || "Materialien im Plenum kontrovers sichern und anschließend schriftlich verdichten.")}</p>
+          </article>
+        </div>
+        <div class="teacher-map">
+          ${module.questions
+            .map(
+              (question, index) => `
+                <article class="teacher-map-card">
+                  <h4>Lehrkommentar zu Aufgabe ${index + 1}</h4>
+                  <p><strong>Arbeitsfrage:</strong> ${escapeHtml(question.prompt)}</p>
+                  <p>${escapeHtml(getTeacherSummary(question))}</p>
+                  ${
+                    question.teacherPrompt
+                      ? `<p><strong>Impuls:</strong> ${escapeHtml(question.teacherPrompt)}</p>`
+                      : ""
+                  }
+                  ${
+                    question.commonPitfall
+                      ? `<p><strong>Typische Schwachstelle:</strong> ${escapeHtml(question.commonPitfall)}</p>`
+                      : ""
+                  }
+                </article>
+              `
+            )
+            .join("")}
+        </div>
       </div>
-      <p class="section-copy">
-        Diese Zusatzansicht zeigt Zeitbedarf, Diagnosefokus, typische Fehlvorstellungen und die
-        fachliche Funktion jeder eingebauten Frage.
-      </p>
-    </div>
-    <div class="teacher-grid">
-      <article class="teacher-card">
-        <h3>Zeitbedarf</h3>
-        <p>${escapeHtml(toolkit.duration || "45 Minuten")}</p>
-      </article>
-      <article class="teacher-card">
-        <h3>Sozialformen</h3>
-        <ul class="module-list">
-          ${(toolkit.socialForms || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-        </ul>
-      </article>
-      <article class="teacher-card">
-        <h3>Diagnosefokus</h3>
-        <ul class="module-list">
-          ${(toolkit.assessmentFocus || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-        </ul>
-      </article>
-      <article class="teacher-card">
-        <h3>Typische Fehlvorstellungen</h3>
-        <ul class="module-list">
-          ${(toolkit.misconceptions || []).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-        </ul>
-      </article>
-      <article class="teacher-card">
-        <h3>Möglicher Leistungsnachweis</h3>
-        <p>${escapeHtml(toolkit.product || "Vergleichender Kurzkommentar oder strukturierte Transferantwort.")}</p>
-      </article>
-      <article class="teacher-card">
-        <h3>Erweiterung</h3>
-        <p>${escapeHtml(toolkit.extension || "Materialien im Plenum kontrovers sichern und anschließend schriftlich verdichten.")}</p>
-      </article>
-    </div>
-    <div class="teacher-map">
-      ${module.questions
-        .map(
-          (question, index) => `
-            <article class="teacher-map-card">
-              <h4>Frage ${index + 1}</h4>
-              <p>${escapeHtml(getTeacherSummary(question))}</p>
-              ${
-                question.teacherPrompt
-                  ? `<p><strong>Impuls:</strong> ${escapeHtml(question.teacherPrompt)}</p>`
-                  : ""
-              }
-              ${
-                question.commonPitfall
-                  ? `<p><strong>Typische Schwachstelle:</strong> ${escapeHtml(question.commonPitfall)}</p>`
-                  : ""
-              }
-            </article>
-          `
-        )
-        .join("")}
-    </div>
+    </details>
   `;
 }
 
@@ -1083,7 +1089,7 @@ function unlockTeacherMode() {
   closeTeacherAuth();
   renderApp();
   requestAnimationFrame(() => {
-    elements.teacherPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    elements.questionList.closest(".panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
