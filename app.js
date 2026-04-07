@@ -536,6 +536,7 @@ function renderModuleHeader(module) {
   const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
   const unlocked = isModuleUnlocked(moduleIndex);
   const moduleScore = getModuleScore(module);
+  const visual = module.visual;
 
   elements.moduleHeader.innerHTML = `
     <div class="module-title-row">
@@ -556,6 +557,17 @@ function renderModuleHeader(module) {
         <p class="module-copy">${escapeHtml(module.goal)}</p>
       </aside>
     </div>
+
+    ${
+      visual
+        ? `
+          <figure class="module-visual">
+            <img src="${escapeHtml(visual.src)}" alt="${escapeHtml(visual.alt || module.title)}" />
+            <figcaption>${escapeHtml(visual.sourceLabel || "Bild aus den eingebauten Materialien")}</figcaption>
+          </figure>
+        `
+        : ""
+    }
 
     <div class="module-grid">
       <article class="module-box">
