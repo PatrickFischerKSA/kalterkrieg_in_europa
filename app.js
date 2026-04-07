@@ -950,9 +950,9 @@ function renderApp() {
     state.teacherMode = false;
   }
   elements.teacherModeButton.textContent = state.teacherMode
-    ? "Lehrpersonenmodus an"
+    ? "Lehrpersonenmodus aktiv"
     : state.teacherAuthorized
-      ? "Lehrpersonenmodus aus"
+      ? "Lehrpersonenmodus einschalten"
       : "Lehrer*innenzugang";
   elements.teacherModeButton.classList.toggle("is-active", state.teacherMode);
   renderStats();
@@ -993,6 +993,9 @@ elements.teacherAuthForm.addEventListener("submit", (event) => {
   saveStore();
   closeTeacherAuth();
   renderApp();
+  requestAnimationFrame(() => {
+    elements.teacherPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
 elements.teacherAuthCancel.addEventListener("click", closeTeacherAuth);
