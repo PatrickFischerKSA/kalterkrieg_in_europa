@@ -35,7 +35,7 @@ const MODULES = [
         "Mit der Transferfrage die Unterschiede zwischen monokausalen und mehrdimensionalen Deutungen sichtbar machen."
     },
     visual: {
-      src: "assets/module-images/kalterkrieg-map-clean2.png",
+      src: "assets/module-images/kalterkrieg-map-better.png",
       alt: "Kartenausschnitt zu Besatzungszonen und Nachkriegsordnung in Mitteleuropa",
       sourceLabel: "Kartenausschnitt aus KalterKrieg.pdf"
     },
@@ -429,7 +429,7 @@ const MODULES = [
         "Die Transferfrage kann als Mini-Essay oder mündliche Streitfrage zwischen zwei Gruppen genutzt werden."
     },
     visual: {
-      src: "assets/module-images/brd-gruendung-clean.jpg",
+      src: "assets/module-images/brd-gruendung-better.jpg",
       alt: "Ausschnitt mit Grundgesetz und Bundesadler zur Gründung der Bundesrepublik",
       sourceLabel: "Teaserbild zur Ressource Gründung der Bundesrepublik"
     },
@@ -765,7 +765,7 @@ const MODULES = [
         "Die Materialien lassen sich in einer Debatte 'Sozialstaat oder Kontrollstaat?' zuspitzen."
     },
     visual: {
-      src: "assets/module-images/bananenrepublik-clean2.jpg",
+      src: "assets/module-images/bananenrepublik-fixed.jpg",
       alt: "Illustratives Motiv zur Konsum- und Mangelerfahrung in der DDR",
       sourceLabel: "Teaserbild zur Ressource Bananenrepublik"
     },
