@@ -125,6 +125,7 @@ function getModuleScore(module) {
 }
 
 function isModuleUnlocked(moduleIndex) {
+  if (state.teacherMode) return true;
   if (moduleIndex <= 0) return true;
   const previousModule = modules[moduleIndex - 1];
   return getModuleScore(previousModule) >= 60;
