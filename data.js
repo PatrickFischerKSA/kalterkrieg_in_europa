@@ -35,9 +35,9 @@ const MODULES = [
         "Mit der Transferfrage die Unterschiede zwischen monokausalen und mehrdimensionalen Deutungen sichtbar machen."
     },
     visual: {
-      src: "assets/module-images/Fragen-Zusammenfassung-Kalter-Krieg.pdf.png",
-      alt: "Vorschaubild aus dem Material Fragen zur Zusammenfassung des Kalten Kriegs",
-      sourceLabel: "Bildquelle: Fragen zur Zusammenfassung des Kalten Kriegs"
+      src: "assets/module-images/kalterkrieg-ueberblick.mp4.png",
+      alt: "Standbild aus der Videoressource wissen2go: Der Kalte Krieg erklärt",
+      sourceLabel: "Standbild aus wissen2go: Der Kalte Krieg erklärt"
     },
     prompts: [
       "Achte auf die Verbindung von Ideologie und Sicherheitsdenken.",
@@ -429,9 +429,9 @@ const MODULES = [
         "Die Transferfrage kann als Mini-Essay oder mündliche Streitfrage zwischen zwei Gruppen genutzt werden."
     },
     visual: {
-      src: "assets/module-images/KalterKrieg.pdf.png",
-      alt: "Vorschaubild aus dem Material KalterKrieg.pdf zur Entwicklung von Besatzungszonen zu zwei deutschen Staaten",
-      sourceLabel: "Bildquelle: KalterKrieg.pdf"
+      src: "assets/module-images/ddr-gruendung.mp4.png",
+      alt: "Standbild aus der Videoressource Die Gründung der DDR",
+      sourceLabel: "Standbild aus Die Gründung der DDR"
     },
     prompts: [
       "Achte auf Unterschiede zwischen politischer Gründungslegitimation und realer Machtordnung.",
@@ -765,9 +765,9 @@ const MODULES = [
         "Die Materialien lassen sich in einer Debatte 'Sozialstaat oder Kontrollstaat?' zuspitzen."
     },
     visual: {
-      src: "assets/module-images/Bananenrepublik.pdf.png",
-      alt: "Vorschaubild aus dem Material Bananenrepublik zur Konsum- und Mangelerfahrung in der DDR",
-      sourceLabel: "Bildquelle: Bananenrepublik.pdf"
+      src: "assets/module-images/17-juni.mp4.png",
+      alt: "Standbild aus der Videoressource 17. Juni 1953: Volksaufstand in der DDR",
+      sourceLabel: "Standbild aus 17. Juni 1953: Volksaufstand in der DDR"
     },
     prompts: [
       "Notiere in jedem Material mindestens eine soziale Leistung und mindestens eine Begrenzung.",
@@ -1154,9 +1154,9 @@ const MODULES = [
         "Als Zusatz kann der Begriff 'Sicherheitsstaat' gegen 'Diktatur' begrifflich differenziert werden."
     },
     visual: {
-      src: "assets/module-images/berliner-mauer.mp4.png",
-      alt: "Standbild aus der Videoressource Die Berliner Mauer",
-      sourceLabel: "Bildquelle: Die Berliner Mauer"
+      src: "assets/module-images/berliner-mauer-youtube.jpg",
+      alt: "Vorschaubild aus der Videoressource Eingemauert: Die innerdeutsche Grenze",
+      sourceLabel: "Vorschaubild aus Eingemauert: Die innerdeutsche Grenze"
     },
     prompts: [
       "Achte auf den Unterschied zwischen offizieller Begründung und realer Funktion.",
@@ -1522,9 +1522,9 @@ const MODULES = [
         "Die Station lässt sich gut mit einem Kontinuum 'Reform im System' bis 'Systembruch' weiterführen."
     },
     visual: {
-      src: "assets/module-images/Fragen-Prager-Fruehling-1968.docx.png",
-      alt: "Vorschaubild aus dem Material Fragen: Der Prager Frühling 1968",
-      sourceLabel: "Bildquelle: Fragen: Der Prager Frühling 1968"
+      src: "assets/module-images/prager-fruehling.mp4.png",
+      alt: "Standbild aus der Videoressource Prager Frühling",
+      sourceLabel: "Standbild aus Prager Frühling"
     },
     prompts: [
       "Frage bei jedem Fall: Wer protestiert? Was wird gefordert? Wer greift ein?",
@@ -1893,9 +1893,9 @@ const MODULES = [
         "Die Station kann mit einer Debatte über Tempo und Alternativen der Vereinigung verbunden werden."
     },
     visual: {
-      src: "assets/module-images/Fragen-Deutschland-im-Fruehling-1990.pdf.png",
-      alt: "Vorschaubild aus dem Material Fragen zu Deutschland im Frühling 1990",
-      sourceLabel: "Bildquelle: Fragen zu Deutschland im Frühling 1990"
+      src: "assets/module-images/mauerfall-youtube-hq.jpg",
+      alt: "Vorschaubild aus der Videoressource zum Mauerfall",
+      sourceLabel: "Vorschaubild aus der Videoressource zum Mauerfall"
     },
     prompts: [
       "Achte darauf, dass 1989 kein lineares Drehbuch war.",
