@@ -429,9 +429,9 @@ const MODULES = [
         "Die Transferfrage kann als Mini-Essay oder mündliche Streitfrage zwischen zwei Gruppen genutzt werden."
     },
     visual: {
-      src: "assets/module-images/brd-gruendung-better.jpg",
-      alt: "Ausschnitt mit Grundgesetz und Bundesadler zur Gründung der Bundesrepublik",
-      sourceLabel: "Teaserbild zur Ressource Gründung der Bundesrepublik"
+      src: "assets/module-images/walter-ulbricht-banner.jpg",
+      alt: "Porträt von Walter Ulbricht als Bildmotiv zur Staatsgründung der DDR",
+      sourceLabel: "Historisches Porträt von Walter Ulbricht via Wikimedia Commons"
     },
     prompts: [
       "Achte auf Unterschiede zwischen politischer Gründungslegitimation und realer Machtordnung.",
