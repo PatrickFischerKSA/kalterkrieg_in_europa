@@ -1161,7 +1161,8 @@ const MODULES = [
     prompts: [
       "Achte auf den Unterschied zwischen offizieller Begründung und realer Funktion.",
       "Frage immer: Wovor schützte das System sich - und wen kontrollierte es?",
-      "Verbinde räumliche Kontrolle mit psychologischer Wirkung."
+      "Verbinde räumliche Kontrolle mit psychologischer Wirkung.",
+      "Vergleiche die zusätzlichen Videoquellen dazu, wie Mauer und Mauerbau begründet und erinnert werden."
     ],
     resources: [
       {
@@ -1217,6 +1218,24 @@ const MODULES = [
         focus: "Verdichtung des Mauerbaus und seiner unmittelbaren Folgen",
         link: "https://www.dropbox.com/scl/fi/12wcfnvar4bnp7fbt7y3r/Ein-Tag-im-August.mp4?rlkey=5mit0zgze7crgdprflzfc4yt0&e=1&st=i8ehse8v&dl=0",
         tags: ["Dropbox", "Vertiefung", "August 1961"]
+      },
+      {
+        id: "r-youtube-berliner-mauer",
+        bucket: "Ergänzende Videos",
+        type: "Video",
+        title: "Berliner Mauer: zusätzliche Videoquelle",
+        focus: "ergänzende Perspektive auf Funktion, Symbolik und Wahrnehmung der Berliner Mauer",
+        link: "https://www.youtube.com/watch?v=jlbAUFvh04k&t=184s",
+        tags: ["YouTube", "Vertiefung", "Mauer"]
+      },
+      {
+        id: "r-youtube-mauerbau",
+        bucket: "Ergänzende Videos",
+        type: "Video",
+        title: "Mauerbau 1961: zusätzliche Videoquelle",
+        focus: "ergänzende Darstellung der Zuspitzung um den Bau der Berliner Mauer im August 1961",
+        link: "https://www.youtube.com/watch?v=OhV0wje9I64",
+        tags: ["YouTube", "Vertiefung", "Mauerbau"]
       }
     ],
     questions: [
@@ -1229,7 +1248,7 @@ const MODULES = [
         help:
           "Nenne mindestens drei Aspekte: Fluchtstopp, Stabilisierung und Herrschaftssicherung.",
         placeholder: "Die Mauer diente real vor allem dazu, ...",
-        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august"],
+        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august", "r-youtube-mauerbau"],
         conceptGroups: [
           {
             label: "Stopp von Flucht oder Abwanderung",
@@ -1289,7 +1308,7 @@ const MODULES = [
           "Lass die Lernenden zunächst Pfeilverbindungen zwischen Grenze, NVA, Stasi und Haft einzeichnen, bevor sie schreiben.",
         commonPitfall:
           "Viele Antworten sammeln Institutionen nebeneinander, erklären aber nicht ihr wechselseitiges Zusammenspiel.",
-        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-nva", "r-veb-horch-und-guck", "r-stasi-gefaengnis"],
+        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-nva", "r-veb-horch-und-guck", "r-stasi-gefaengnis", "r-youtube-berliner-mauer"],
         minWords: 115,
         structureExpectations: {
           mandatory: ["thesis", "evidence", "comparison", "conclusion"],
@@ -1416,7 +1435,7 @@ const MODULES = [
         help:
           "Nenne mindestens drei Aspekte: offizieller Feindbegriff, tatsächliche Funktion und propagandische Verschleierung.",
         placeholder: "Die Formel war irreführend, weil ...",
-        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august"],
+        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august", "r-youtube-mauerbau"],
         conceptGroups: [
           {
             label: "offizielle Schutz- oder Feindrhetorik",
@@ -1882,7 +1901,8 @@ const MODULES = [
       "Achte darauf, dass 1989 kein lineares Drehbuch war.",
       "Notiere Wechselwirkungen zwischen Ausreise, Protest und Machtzerfall.",
       "Unterscheide zwischen DDR-Opposition, bundesdeutscher Perspektive und internationaler Lage.",
-      "Achte im Hörimpuls darauf, wie Hoffnungen, Brüche und Ernüchterung im Rückblick erzählt werden."
+      "Achte im Hörimpuls darauf, wie Hoffnungen, Brüche und Ernüchterung im Rückblick erzählt werden.",
+      "Nutze die zusätzliche Videoquelle zum Mauerfall, um Ereignisablauf und Deutung des 9. November noch genauer zu sichern."
     ],
     resources: [
       {
@@ -1965,6 +1985,15 @@ const MODULES = [
         focus: "Audioquelle zu Hoffnungen, Konflikten und Enttäuschungen im späten Staatssozialismus und der Umbruchzeit",
         link: "assets/audio/Gemeinsame-Kaempfe-geplatzte-Traeume.mp3",
         tags: ["lokal", "Audio", "Vertiefung"]
+      },
+      {
+        id: "r-youtube-mauerfall",
+        bucket: "Ergänzende Videos",
+        type: "Video",
+        title: "Mauerfall 1989: zusätzliche Videoquelle",
+        focus: "ergänzende Rekonstruktion des 9. November 1989 und seiner unmittelbaren Dynamik",
+        link: "https://www.youtube.com/watch?v=51lEkVLg3a4",
+        tags: ["YouTube", "Vertiefung", "Mauerfall"]
       }
     ],
     questions: [
@@ -2005,7 +2034,7 @@ const MODULES = [
         help:
           "Nenne mindestens drei Elemente: Druck von unten, Kommunikationschaos und Kontrollverlust.",
         placeholder: "Der 9. November war keine einfache Staatsentscheidung, weil ...",
-        sourceIds: ["r-herbst89-video", "r-herbst89-docx"],
+        sourceIds: ["r-herbst89-video", "r-herbst89-docx", "r-youtube-mauerfall"],
         conceptGroups: [
           {
             label: "Druck durch Protest oder Ausreise",
@@ -2055,7 +2084,7 @@ const MODULES = [
           "Lass die Klasse zuerst eine Ereigniskette bauen und dann gezielt markieren, wo historische Alternativen noch offen waren.",
         commonPitfall:
           "Viele Antworten schreiben im Rückblick zu zielgerichtet und unterschlagen, dass Reform-DDR, langsamer Übergang und schnelle Einheit konkurrierende Möglichkeiten waren.",
-        sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke", "r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video"],
+        sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke", "r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video", "r-youtube-mauerfall"],
         minWords: 135,
         structureExpectations: {
           mandatory: ["thesis", "evidence", "comparison", "nuance", "conclusion"],
@@ -2157,7 +2186,7 @@ const MODULES = [
           "Lass zunächst drei konkurrierende Deutungen sammeln und fordere dann eine bewusste Schwerpunktsetzung mit Gegenargumenten.",
         commonPitfall:
           "Viele Antworten entscheiden sich vorschnell für nur eine Deutung und verlieren dadurch die Dynamik zwischen Opposition, Regimekrise und Vereinigungsprozess aus dem Blick.",
-        sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke", "r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video"],
+        sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke", "r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video", "r-youtube-mauerfall"],
         minWords: 145,
         structureExpectations: {
           mandatory: ["thesis", "evidence", "comparison", "nuance", "conclusion"],
