@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Kalter Krieg in Europa">
+  <rect width="128" height="128" rx="24" fill="#f7f1e8"/>
+  <path d="M18 28h92v12H18z" fill="#2f5d73"/>
+  <path d="M18 88h92v12H18z" fill="#6a3428"/>
+  <path d="M58 16h12v96H58z" fill="#c18242"/>
+  <circle cx="64" cy="64" r="20" fill="none" stroke="#1c1815" stroke-width="8"/>
+</svg>

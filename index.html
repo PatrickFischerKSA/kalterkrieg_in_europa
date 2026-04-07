@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalter Krieg in Europa - Lernlandschaft</title>
+    <meta
+      name="description"
+      content="Interaktive Lernlandschaft zum Kalten Krieg und zur deutschen Teilung mit geordneten Materialien, Sofortkorrektur und Synonymerkennung."
+    />
+    <meta name="theme-color" content="#2f5d73" />
+    <meta property="og:title" content="Kalter Krieg in Europa - Lernlandschaft" />
+    <meta
+      property="og:description"
+      content="Sechs digitale Stationen zum Kalten Krieg, zur deutschen Teilung, zur DDR und zu 1989/90 mit Sofortkorrektur und Lehrpersonenmodus."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/social-preview.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kalter Krieg in Europa - Lernlandschaft" />
+    <meta
+      name="twitter:description"
+      content="Interaktive Lernlandschaft mit Materialien, Transferfragen, Sofortkorrektur und Lehrpersonenmodus."
+    />
+    <meta name="twitter:image" content="assets/social-preview.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Lernlandschaft Geschichte</p>
+          <h1>Kalter Krieg in Europa</h1>
+          <p class="lead">
+            Diese Lernlandschaft ordnet Videos, PDFs, DOCX-Arbeitsblätter und Audioquellen zum
+            Kalten Krieg, zur deutschen Teilung, zum Alltag in der DDR, zu Krisen im Ostblock und
+            zu den Umbrüchen von 1989/90. Jede Station verbindet Materialarbeit mit anspruchsvollen
+            Fragen, Sofortkorrektur und Synonymerkennung.
+          </p>
+          <div class="hero-actions">
+            <button class="btn primary" id="start-route-button" type="button">Mit Station 1 beginnen</button>
+            <button class="btn ghost" id="open-first-open-button" type="button">Direkt zur ersten Transferfrage</button>
+            <button class="btn ghost" id="teacher-mode-button" type="button">Lehrpersonenmodus aus</button>
+          </div>
+        </div>
+
+        <aside class="hero-note">
+          <div class="note-card">
+            <p class="note-label">Leitfrage</p>
+            <p>
+              Wie verwandelte sich der Kalte Krieg von einer Nachkriegskonstellation in einen
+              europäischen und globalen Systemkonflikt, und weshalb wurde Deutschland zu seinem
+              wichtigsten Symbolraum?
+            </p>
+          </div>
+          <div class="note-card">
+            <p class="note-label">Arbeitsweise</p>
+            <p>
+              Zuerst Material sichten, dann knapp sichern, danach deuten. Kurze Freitextantworten
+              werden mit Begriffsfeldern und Synonymen geprüft; offene Antworten erhalten gestuftes
+              Feedback.
+            </p>
+          </div>
+          <div class="note-card">
+            <p class="note-label">GitHub Pages</p>
+            <p>
+              Diese Startseite ist fuer ein statisches Repo vorbereitet: relative Pfade,
+              Social-Preview, Favicon und eine serverfreie Struktur fuer
+              <code>kalterkrieg_in_europa</code>.
+            </p>
+          </div>
+        </aside>
+      </header>
+
+      <section class="dashboard">
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="panel legend-card">
+          <p class="eyebrow">Fragemodi</p>
+          <div class="legend-list">
+            <div>
+              <span class="legend-chip legend-fact">Faktencheck</span>
+              <p>präzise Einzelentscheidung mit Sofortfeedback</p>
+            </div>
+            <div>
+              <span class="legend-chip legend-compare">Vergleich</span>
+              <p>mehrere richtige Elemente, Teilpunkte und Rückmeldung</p>
+            </div>
+            <div>
+              <span class="legend-chip legend-transfer">Transfer</span>
+              <p>Freitext mit Synonymerkennung, Fachbegriffen und Deutungstiefe</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <aside class="panel module-rail">
+          <div class="rail-head">
+            <p class="eyebrow">Stationen</p>
+            <h2>Roter Faden</h2>
+          </div>
+          <div id="module-nav" class="module-nav"></div>
+        </aside>
+
+        <main class="focus-column">
+          <section class="panel module-header" id="module-header"></section>
+          <section class="panel teacher-panel hidden" id="teacher-panel"></section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Materialpool</p>
+                <h2>Ressourcen der Station</h2>
+              </div>
+              <p class="section-copy">
+                Alle eingebauten Materialien dieser Station sind hier nach Typ geordnet. Externe
+                Videos oeffnen in Dropbox, lokale Materialien liegen direkt im Projekt.
+              </p>
+            </div>
+            <div id="resource-groups" class="resource-groups"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Fragenraum</p>
+                <h2>Anspruchsvolle Ueberpruefung</h2>
+              </div>
+              <p class="section-copy">
+                Nach jeder Antwort erscheint sofort eine Korrektur. Bei kurzen Freitexten werden
+                auch sinnverwandte Formulierungen erkannt.
+              </p>
+            </div>
+            <div id="question-list" class="question-list"></div>
+          </section>
+        </main>
+      </div>
+
+      <section class="panel audio-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Audiothek</p>
+            <h2>Zusaetzliche Hoerimpulse</h2>
+          </div>
+          <p class="section-copy">
+            Diese beiden Audiodateien sind projektintern verlinkt und koennen als freiwillige
+            Vertiefung oder fuer Hausaufgaben genutzt werden.
+          </p>
+        </div>
+        <div id="audio-lounge" class="audio-lounge"></div>
+      </section>
+
+      <section class="panel publish-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Bereit fuer Pages</p>
+            <h2>Startseite und Deployment</h2>
+          </div>
+          <p class="section-copy">
+            Die Lernlandschaft ist als statische GitHub-Pages-Seite angelegt. Alle lokalen Dateien
+            arbeiten mit relativen Pfaden; externe Videos bleiben als Dropbox-Ressourcen eingebunden.
+          </p>
+        </div>
+        <div class="publish-grid">
+          <article class="publish-card">
+            <h3>Repo-Name</h3>
+            <p><code>kalterkrieg_in_europa</code></p>
+          </article>
+          <article class="publish-card">
+            <h3>Statische Assets</h3>
+            <p>Favicon, Social-Preview, PDFs, DOCX und MP3s liegen direkt im Projektordner.</p>
+          </article>
+          <article class="publish-card">
+            <h3>Ohne Backend</h3>
+            <p>Die Lernlandschaft braucht keinen Server und kann direkt ueber GitHub Pages laufen.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
