@@ -1,5 +1,6 @@
 const storageKey = "kalterkrieg-in-europa-progress";
 const teacherPassword = "kalter_krieg";
+const teacherPasswordAliases = ["kalter_krieg", "kalter krieg", "kalter-krieg", "kalterkrieg"];
 const modules = window.COLD_WAR_MODULES || [];
 const audioItems = window.COLD_WAR_AUDIO || [];
 const structureSpec = {
@@ -86,6 +87,24 @@ function normalizeText(value = "") {
     .replace(/[.,;:!?()[\]]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function normalizePasswordEntry(value = "") {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/ß/g, "ss")
+    .replace(/[_-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isTeacherPasswordValid(value = "") {
+  const normalizedValue = normalizePasswordEntry(value);
+  return [teacherPassword, ...teacherPasswordAliases].some(
+    (entry) => normalizePasswordEntry(entry) === normalizedValue
+  );
 }
 
 function wordCount(value = "") {
@@ -193,7 +212,7 @@ function evaluateSingleChoice(question, answerValue) {
       status: "error",
       score: 0,
       title: "Noch keine Entscheidung",
-      body: "Waehle zuerst eine Antwort aus.",
+      body: "Wähle zuerst eine Antwort aus.",
       missing: [],
       strengths: []
     };
@@ -205,7 +224,7 @@ function evaluateSingleChoice(question, answerValue) {
     score: correct ? 100 : 0,
     title: correct ? "Treffer" : "Noch nicht passend",
     body: question.explanation,
-    missing: correct ? [] : ["Pruefe den Kernbegriff der Aufgabe erneut."],
+    missing: correct ? [] : ["Prüfe den Kernbegriff der Aufgabe erneut."],
     strengths: correct ? ["Die zentrale Aussage ist korrekt erkannt."] : []
   };
 }
@@ -238,7 +257,7 @@ function evaluateMultiSelect(question, selectedIds) {
   return {
     status: fullyCorrect ? "success" : score >= 55 ? "warn" : "error",
     score,
-    title: fullyCorrect ? "Vollstaendig richtig" : score >= 55 ? "Teilweise richtig" : "Zu ungenau",
+    title: fullyCorrect ? "Vollständig richtig" : score >= 55 ? "Teilweise richtig" : "Zu ungenau",
     body: question.explanation,
     missing: fullyCorrect ? [] : ["Vergleiche die markierten Aussagen nochmals mit der historischen Logik."],
     strengths: hits ? [`Du hast ${hits} zutreffende Aussage${hits === 1 ? "" : "n"} markiert.`] : []
@@ -252,7 +271,7 @@ function evaluateShortText(question, answer) {
       status: "error",
       score: 0,
       title: "Noch keine Antwort",
-      body: "Schreibe zuerst eine kurze Erklaerung.",
+      body: "Schreibe zuerst eine kurze Erklärung.",
       missing: [],
       strengths: []
     };
@@ -265,10 +284,10 @@ function evaluateShortText(question, answer) {
   return {
     status: success ? "success" : score >= 50 ? "warn" : "error",
     score,
-    title: success ? "Begrifflich tragfaehig" : score >= 50 ? "Teilweise tragfaehig" : "Noch zu duenn",
+    title: success ? "Begrifflich tragfähig" : score >= 50 ? "Teilweise tragfähig" : "Noch zu dünn",
     body: success
       ? "Die Antwort deckt die geforderten Sinnschichten ab."
-      : "Die Antwort hat bereits einen Kern, braucht aber noch mehr historische Praezision.",
+      : "Die Antwort hat bereits einen Kern, braucht aber noch mehr historische Präzision.",
     missing,
     strengths: hits
   };
@@ -281,7 +300,7 @@ function evaluateOpenAnalysis(question, answer) {
       status: "error",
       score: 0,
       title: "Noch keine Antwort",
-      body: "Schreibe zuerst eine zusammenhaengende Deutung.",
+      body: "Schreibe zuerst eine zusammenhängende Deutung.",
       missing: [],
       strengths: []
     };
@@ -325,26 +344,26 @@ function evaluateOpenAnalysis(question, answer) {
   if (structure.mandatoryMissing.length) total = Math.min(total, 64);
   if (sourceHits.length === 0) total = Math.min(total, 69);
 
-  let title = "Ausbaufaehig";
+  let title = "Ausbaufähig";
   let status = "error";
   let body =
-    "Die Antwort hat eine Richtung, braucht aber noch mehr Struktur, Materialbezug und begriffliche Schaerfe.";
+    "Die Antwort hat eine Richtung, braucht aber noch mehr Struktur, Materialbezug und begriffliche Schärfe.";
 
   if (total >= 85) {
     title = "Sehr differenziert";
     status = "success";
     body =
-      "Die Antwort verbindet mehrere Erklaerungsebenen, arbeitet mit Materialbezug und zeigt eine eigene historische Gewichtung.";
+      "Die Antwort verbindet mehrere Erklärungsebenen, arbeitet mit Materialbezug und zeigt eine eigene historische Gewichtung.";
   } else if (total >= 68) {
     title = "Differenziert";
     status = "warn";
     body =
-      "Die Antwort ist tragfaehig, kann aber noch klarer gewichten oder genauer auf einzelne Materialien Bezug nehmen.";
+      "Die Antwort ist tragfähig, kann aber noch klarer gewichten oder genauer auf einzelne Materialien Bezug nehmen.";
   } else if (total >= 50) {
-    title = "Teilweise tragfaehig";
+    title = "Teilweise tragfähig";
     status = "warn";
     body =
-      "Wichtige Aspekte sind angesprochen, aber die Antwort bleibt noch zu kurz oder zu wenig verknuepft.";
+      "Wichtige Aspekte sind angesprochen, aber die Antwort bleibt noch zu kurz oder zu wenig verknüpft.";
   }
 
   return {
@@ -359,7 +378,7 @@ function evaluateOpenAnalysis(question, answer) {
       `Struktur: ${structure.hits.length}/${targetStructureHits} Signale`,
       `Materialbezug: ${sourceHits.length} Treffer`,
       `Nuancierung: ${nuanceHits.length + reasoningHits.length} Signale`,
-      `Umfang: ${wc} Woerter`
+      `Umfang: ${wc} Wörter`
     ]
   };
 }
@@ -402,7 +421,7 @@ function buildStats() {
 
   return [
     { label: "Freigeschaltet", value: `${unlockedModules.length} / ${modules.length}` },
-    { label: "Fragen geloest", value: `${answered.length} / ${allQuestions.length}` },
+    { label: "Fragen gelöst", value: `${answered.length} / ${allQuestions.length}` },
     { label: "Sicher gemeistert", value: `${mastered.length}` },
     { label: "Durchschnitt", value: formatPercent(averageScore) }
   ];
@@ -423,10 +442,10 @@ function renderStats() {
 
 function getTeacherSummary(question) {
   if (question.type === "single-choice") {
-    return "Prueft die zentrale historische Grundentscheidung dieser Station.";
+    return "Prüft die zentrale historische Grundentscheidung dieser Station.";
   }
   if (question.type === "multi-select") {
-    return "Prueft, ob mehrere historische Faktoren gleichzeitig erkannt und gegeneinander abgegrenzt werden.";
+    return "Prüft, ob mehrere historische Faktoren gleichzeitig erkannt und gegeneinander abgegrenzt werden.";
   }
   if (question.type === "short-text") {
     return `Diagnose der Begriffsarbeit: ${question.conceptGroups.map((group) => group.label).join("; ")}.`;
@@ -507,7 +526,7 @@ function renderModuleHeader(module) {
         <p class="module-copy">${escapeHtml(state.teacherMode ? module.teacherNote : module.goal)}</p>
       </article>
       <article class="module-box">
-        <h3>Arbeitsauftraege</h3>
+        <h3>Arbeitsaufträge</h3>
         <ul class="module-list">
           ${module.prompts.map((prompt) => `<li>${escapeHtml(prompt)}</li>`).join("")}
         </ul>
@@ -515,7 +534,7 @@ function renderModuleHeader(module) {
       <article class="module-box">
         <h3>Didaktischer Fokus</h3>
         <p class="module-copy">
-          Diese Station verbindet Materialerschliessung mit sofort rueckgemeldeter Begriffsarbeit
+          Diese Station verbindet Materialerschließung mit sofort rückgemeldeter Begriffsarbeit
           und einer offenen Transferfrage.
         </p>
       </article>
@@ -567,12 +586,12 @@ function renderTeacherPanel(module) {
         </ul>
       </article>
       <article class="teacher-card">
-        <h3>Moeglicher Leistungsnachweis</h3>
+        <h3>Möglicher Leistungsnachweis</h3>
         <p>${escapeHtml(toolkit.product || "Vergleichender Kurzkommentar oder strukturierte Transferantwort.")}</p>
       </article>
       <article class="teacher-card">
         <h3>Erweiterung</h3>
-        <p>${escapeHtml(toolkit.extension || "Materialien im Plenum kontrovers sichern und anschliessend schriftlich verdichten.")}</p>
+        <p>${escapeHtml(toolkit.extension || "Materialien im Plenum kontrovers sichern und anschließend schriftlich verdichten.")}</p>
       </article>
     </div>
     <div class="teacher-map">
@@ -637,7 +656,7 @@ function renderResources(module) {
           <div class="resource-grid">
             ${resources
               .map((resource) => {
-                const actionLabel = resource.type === "Video" ? "Video oeffnen" : "Material oeffnen";
+                const actionLabel = resource.type === "Video" ? "Video öffnen" : "Material öffnen";
                 return `
                   <article class="resource-card">
                     <h4>${escapeHtml(resource.title)}</h4>
@@ -673,7 +692,7 @@ function renderFeedback(result) {
     return `
       <div class="feedback-box neutral">
         <p class="feedback-title">Noch nicht korrigiert</p>
-        <div class="feedback-body">Loese die Frage, um sofort Rueckmeldung zu erhalten.</div>
+        <div class="feedback-body">Löse die Frage, um sofort Rückmeldung zu erhalten.</div>
       </div>
     `;
   }
@@ -797,7 +816,7 @@ function renderQuestionCard(question, index, resourceMap) {
           : ""
       }
       <details>
-        <summary>Musterloesung anzeigen</summary>
+        <summary>Musterlösung anzeigen</summary>
         <div class="model-answer">${escapeHtml(question.modelAnswer)}</div>
       </details>
     </article>
@@ -814,7 +833,7 @@ function renderQuestions(module) {
         <div class="question-topline">
           <div>
             <span class="question-type">Freischaltung</span>
-            <h3>Naechste Station gesperrt</h3>
+            <h3>Nächste Station gesperrt</h3>
           </div>
           <div class="question-score">${formatPercent(getModuleScore(previousModule))}</div>
         </div>
@@ -852,7 +871,7 @@ function renderAudioLounge() {
           <h3>${escapeHtml(item.title)}</h3>
           <p>${escapeHtml(item.description)}</p>
           <div class="resource-actions">
-            <a class="btn ghost small" href="${escapeHtml(item.src)}" target="_blank" rel="noreferrer">Datei oeffnen</a>
+            <a class="btn ghost small" href="${escapeHtml(item.src)}" target="_blank" rel="noreferrer">Datei öffnen</a>
           </div>
           <audio controls preload="none">
             <source src="${escapeHtml(item.src)}" type="audio/mpeg" />
@@ -965,8 +984,8 @@ elements.teacherModeButton.addEventListener("click", () => {
 elements.teacherAuthForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = elements.teacherPasswordInput.value.trim();
-  if (value !== teacherPassword) {
-    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt.";
+  if (!isTeacherPasswordValid(value)) {
+    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt. Probiere: kalter_krieg";
     return;
   }
   state.teacherAuthorized = true;
