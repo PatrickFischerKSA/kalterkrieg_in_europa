@@ -35,9 +35,9 @@ const MODULES = [
         "Mit der Transferfrage die Unterschiede zwischen monokausalen und mehrdimensionalen Deutungen sichtbar machen."
     },
     visual: {
-      src: "assets/module-images/kalterkrieg-ueberblick.mp4.png",
-      alt: "Standbild aus der Videoressource wissen2go: Der Kalte Krieg erklärt",
-      sourceLabel: "Standbild aus wissen2go: Der Kalte Krieg erklärt"
+      src: "assets/module-images/kalterkrieg-map-clean2.png",
+      alt: "Kartenausschnitt zu Besatzungszonen und Nachkriegsordnung in Mitteleuropa",
+      sourceLabel: "Kartenausschnitt aus KalterKrieg.pdf"
     },
     prompts: [
       "Achte auf die Verbindung von Ideologie und Sicherheitsdenken.",
@@ -429,9 +429,9 @@ const MODULES = [
         "Die Transferfrage kann als Mini-Essay oder mündliche Streitfrage zwischen zwei Gruppen genutzt werden."
     },
     visual: {
-      src: "assets/module-images/ddr-gruendung.mp4.png",
-      alt: "Standbild aus der Videoressource Die Gründung der DDR",
-      sourceLabel: "Standbild aus Die Gründung der DDR"
+      src: "assets/module-images/brd-gruendung-clean.jpg",
+      alt: "Ausschnitt mit Grundgesetz und Bundesadler zur Gründung der Bundesrepublik",
+      sourceLabel: "Teaserbild zur Ressource Gründung der Bundesrepublik"
     },
     prompts: [
       "Achte auf Unterschiede zwischen politischer Gründungslegitimation und realer Machtordnung.",
@@ -765,9 +765,9 @@ const MODULES = [
         "Die Materialien lassen sich in einer Debatte 'Sozialstaat oder Kontrollstaat?' zuspitzen."
     },
     visual: {
-      src: "assets/module-images/17-juni.mp4.png",
-      alt: "Standbild aus der Videoressource 17. Juni 1953: Volksaufstand in der DDR",
-      sourceLabel: "Standbild aus 17. Juni 1953: Volksaufstand in der DDR"
+      src: "assets/module-images/bananenrepublik-clean2.jpg",
+      alt: "Illustratives Motiv zur Konsum- und Mangelerfahrung in der DDR",
+      sourceLabel: "Teaserbild zur Ressource Bananenrepublik"
     },
     prompts: [
       "Notiere in jedem Material mindestens eine soziale Leistung und mindestens eine Begrenzung.",
@@ -1154,8 +1154,8 @@ const MODULES = [
         "Als Zusatz kann der Begriff 'Sicherheitsstaat' gegen 'Diktatur' begrifflich differenziert werden."
     },
     visual: {
-      src: "assets/module-images/berliner-mauer-youtube.jpg",
-      alt: "Vorschaubild aus der Videoressource Eingemauert: Die innerdeutsche Grenze",
+      src: "assets/module-images/berliner-mauer-final.jpg",
+      alt: "Grenzanlage mit Wachturm an der Berliner Mauer",
       sourceLabel: "Vorschaubild aus Eingemauert: Die innerdeutsche Grenze"
     },
     prompts: [
@@ -1522,9 +1522,9 @@ const MODULES = [
         "Die Station lässt sich gut mit einem Kontinuum 'Reform im System' bis 'Systembruch' weiterführen."
     },
     visual: {
-      src: "assets/module-images/prager-fruehling.mp4.png",
-      alt: "Standbild aus der Videoressource Prager Frühling",
-      sourceLabel: "Standbild aus Prager Frühling"
+      src: "assets/module-images/prager-final2.jpg",
+      alt: "Protestszenen und Panzer im Kontext des Prager Frühlings",
+      sourceLabel: "Vorschaubild zur Ressource Prager Frühling"
     },
     prompts: [
       "Frage bei jedem Fall: Wer protestiert? Was wird gefordert? Wer greift ein?",
@@ -1893,8 +1893,8 @@ const MODULES = [
         "Die Station kann mit einer Debatte über Tempo und Alternativen der Vereinigung verbunden werden."
     },
     visual: {
-      src: "assets/module-images/mauerfall-youtube-hq.jpg",
-      alt: "Vorschaubild aus der Videoressource zum Mauerfall",
+      src: "assets/module-images/mauerfall-final.jpg",
+      alt: "Menschen auf der Berliner Mauer im Moment des Mauerfalls",
       sourceLabel: "Vorschaubild aus der Videoressource zum Mauerfall"
     },
     prompts: [
