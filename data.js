@@ -765,9 +765,9 @@ const MODULES = [
         "Die Materialien lassen sich in einer Debatte 'Sozialstaat oder Kontrollstaat?' zuspitzen."
     },
     visual: {
-      src: "assets/module-images/bananenrepublik-fixed.jpg",
-      alt: "Illustratives Motiv zur Konsum- und Mangelerfahrung in der DDR",
-      sourceLabel: "Teaserbild zur Ressource Bananenrepublik"
+      src: "assets/module-images/trabbis-banner.jpg",
+      alt: "Reihe von Trabant-Autos als Bildmotiv für Alltag und Konsum in der DDR",
+      sourceLabel: "Trabant-Bild via Wikimedia Commons"
     },
     prompts: [
       "Notiere in jedem Material mindestens eine soziale Leistung und mindestens eine Begrenzung.",
