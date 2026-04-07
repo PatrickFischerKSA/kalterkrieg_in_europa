@@ -561,7 +561,7 @@ function renderModuleHeader(module) {
     ${
       visual
         ? `
-          <figure class="module-visual" title="${escapeHtml(visual.sourceLabel || "Bild aus den eingebauten Materialien")}">
+          <figure class="module-visual">
             <img src="${escapeHtml(visual.src)}" alt="${escapeHtml(visual.alt || module.title)}" />
           </figure>
         `
