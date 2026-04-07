@@ -185,6 +185,57 @@ a {
   margin-top: 22px;
 }
 
+.teacher-access-panel {
+  margin-top: 22px;
+  padding: 26px;
+}
+
+.teacher-access-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.teacher-access-form {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.teacher-access-form label {
+  font-weight: 800;
+}
+
+.teacher-access-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(53, 41, 32, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.teacher-access-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.teacher-access-status {
+  min-height: 1.5rem;
+  margin: 0;
+  color: var(--wire);
+  font-weight: 700;
+}
+
+.teacher-access-status-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -479,8 +530,7 @@ a {
 .teacher-map-card p,
 .teacher-map-card li,
 .feedback-breakdown li,
-.teacher-inline p,
-.publish-card p {
+.teacher-inline p {
   color: var(--muted);
   line-height: 1.68;
 }
@@ -519,86 +569,6 @@ a {
 .feedback-breakdown {
   margin: 12px 0 0;
   padding-left: 18px;
-}
-
-.publish-panel {
-  margin-top: 22px;
-}
-
-.publish-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  padding: 0 26px 26px;
-}
-
-.publish-card {
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(229, 221, 208, 0.58));
-}
-
-.publish-card h3 {
-  margin: 0 0 10px;
-}
-
-.publish-card p {
-  margin: 0;
-}
-
-.auth-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: grid;
-  place-items: center;
-}
-
-.auth-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(28, 24, 21, 0.42);
-  backdrop-filter: blur(4px);
-}
-
-.auth-panel {
-  position: relative;
-  z-index: 1;
-  width: min(92vw, 520px);
-  padding: 28px;
-}
-
-.auth-form {
-  display: grid;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.auth-form label {
-  font-weight: 700;
-}
-
-.auth-form input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(53, 41, 32, 0.18);
-  background: rgba(255, 255, 255, 0.92);
-}
-
-.auth-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.auth-status {
-  min-height: 1.5rem;
-  margin: 14px 0 0;
-  color: var(--wire);
-  font-weight: 700;
 }
 
 .section-head {
@@ -938,7 +908,9 @@ summary {
 @media (max-width: 1100px) {
   .hero,
   .dashboard,
-  .workspace {
+  .workspace,
+  .teacher-access-wrap,
+  .teacher-access-status-card {
     grid-template-columns: 1fr;
   }
 
@@ -948,10 +920,8 @@ summary {
 
   .stats-grid,
   .resource-grid,
-  .audio-lounge,
   .module-grid,
-  .teacher-grid,
-  .publish-grid {
+  .teacher-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -968,11 +938,11 @@ summary {
   }
 
   .hero,
+  .teacher-access-panel,
   .module-header,
   .section-head,
   .resource-groups,
-  .question-list,
-  .audio-lounge {
+  .question-list {
     padding-left: 18px;
     padding-right: 18px;
   }
@@ -984,16 +954,15 @@ summary {
 
   .stats-grid,
   .resource-grid,
-  .audio-lounge,
   .module-grid,
-  .teacher-grid,
-  .publish-grid {
+  .teacher-grid {
     grid-template-columns: 1fr;
   }
 
   .hero-actions,
   .resource-actions,
-  .question-actions {
+  .question-actions,
+  .teacher-access-actions {
     flex-direction: column;
   }
 

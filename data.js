@@ -9,7 +9,7 @@ const MODULES = [
     goal:
       "Du kannst den Kalten Krieg als Kombination aus Sicherheitsinteressen, Ideologie, Wirtschaftspolitik und globalem Machtanspruch erklären.",
     route:
-      "Sichtung der beiden Überblicksvideos, danach Arbeit mit dem PDF und den beiden Frageblättern. Erst sichern, dann vergleichen, dann deuten.",
+      "Sichtung der beiden Überblicksvideos, danach Arbeit mit dem PDF und den beiden Frageblättern. Höre zum Schluss den eingebauten Hörimpuls zu Feindbildern und Wahrnehmungen. Erst sichern, dann vergleichen, dann deuten.",
     teacherNote:
       "Die Station eignet sich als gemeinsamer Einstieg oder als Hausauftragsmodul vor einer Vertiefung zu Deutschland.",
     teacherToolkit: {
@@ -37,7 +37,8 @@ const MODULES = [
     prompts: [
       "Achte auf die Verbindung von Ideologie und Sicherheitsdenken.",
       "Notiere, wie die Videos Deutschland und Berlin positionieren.",
-      "Halte fest, welche Rolle Wirtschaftspolitik für die Blockbildung spielt."
+      "Halte fest, welche Rolle Wirtschaftspolitik für die Blockbildung spielt.",
+      "Prüfe im Hörimpuls, wie Feindbilder und Grenzüberschreitungen sprachlich erzählt werden."
     ],
     resources: [
       {
@@ -84,6 +85,15 @@ const MODULES = [
         focus: "komprimierte Sicherung für Wiederholung und Repetition",
         link: "assets/materials/Fragen-Zusammenfassung-Kalter-Krieg.pdf",
         tags: ["lokal", "Repetition"]
+      },
+      {
+        id: "r-audio-pr-reise",
+        bucket: "Hörimpulse",
+        type: "Audio",
+        title: "Eine PR-Reise ins Land des Erzfeindes",
+        focus: "Audioquelle zu Feindbildern, Wahrnehmungen, Begegnungen und sprachlichen Deutungen im Ost-West-Konflikt",
+        link: "assets/audio/Eine-PR-Reise-ins-Land-des-Erzfeindes.mp3",
+        tags: ["lokal", "Audio", "Vertiefung"]
       }
     ],
     questions: [
@@ -358,13 +368,13 @@ const MODULES = [
           "Lass zuerst sammeln, warum die Formel attraktiv ist, und frage dann, welche Ebenen dadurch unsichtbar werden.",
         commonPitfall:
           "Oft wird die Formel nur zurückgewiesen, ohne ihren wahren Kern zu benennen: die reale Dominanz der Supermächte.",
-        sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2", "r-kalterkrieg-pdf", "r-zusammenfassung-fragen"],
+        sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2", "r-kalterkrieg-pdf", "r-zusammenfassung-fragen", "r-audio-pr-reise"],
         minWords: 140,
         structureExpectations: {
           mandatory: ["thesis", "evidence", "nuance", "conclusion"],
           targetHits: 5
         },
-        sourceHints: ["usa", "udssr", "deutschland", "berlin", "marshallplan", "abschreckung"],
+        sourceHints: ["usa", "udssr", "deutschland", "berlin", "marshallplan", "abschreckung", "erzfeind", "feindbild", "reise"],
         rubric: [
           { concept: "Supermächte als zentrales Machtzentrum", keywords: ["usa", "udssr", "supermaechte", "washington", "moskau"] },
           { concept: "Ideologische Dimension", keywords: ["ideologie", "kapitalismus", "kommunismus", "gesellschaftsordnung", "weltanschauung"] },
@@ -1813,7 +1823,7 @@ const MODULES = [
     goal:
       "Du kannst den Zusammenhang von Opposition, Massenexodus, Straßenprotest, Machtzerfall und Wiedervereinigung differenziert erklären.",
     route:
-      "Starte mit Opposition und Stimmungsbildern, arbeite dann die Chronologie des Herbstes 1989 durch und schließe mit der offenen Lage des Frühlings 1990 ab.",
+      "Starte mit Opposition und Stimmungsbildern, arbeite dann die Chronologie des Herbstes 1989 durch, höre den eingebauten Hörimpuls zu Hoffnungen und Enttäuschungen und schließe mit der offenen Lage des Frühlings 1990 ab.",
     teacherNote:
       "Diese Station eignet sich besonders für Kontroversen: Reform der DDR, Revolution oder Weg in die schnelle Einheit?",
     teacherToolkit: {
@@ -1841,7 +1851,8 @@ const MODULES = [
     prompts: [
       "Achte darauf, dass 1989 kein lineares Drehbuch war.",
       "Notiere Wechselwirkungen zwischen Ausreise, Protest und Machtzerfall.",
-      "Unterscheide zwischen DDR-Opposition, bundesdeutscher Perspektive und internationaler Lage."
+      "Unterscheide zwischen DDR-Opposition, bundesdeutscher Perspektive und internationaler Lage.",
+      "Achte im Hörimpuls darauf, wie Hoffnungen, Brüche und Ernüchterung im Rückblick erzählt werden."
     ],
     resources: [
       {
@@ -1915,6 +1926,15 @@ const MODULES = [
         focus: "Arbeitsblatt zur offenen Übergangsphase nach dem Mauerfall",
         link: "assets/materials/Fragen-Deutschland-im-Fruehling-1990.pdf",
         tags: ["lokal", "Arbeitsblatt"]
+      },
+      {
+        id: "r-audio-gemeinsame-kaempfe",
+        bucket: "Hörimpulse",
+        type: "Audio",
+        title: "Gemeinsame Kämpfe, geplatzte Träume",
+        focus: "Audioquelle zu Hoffnungen, Konflikten und Enttäuschungen im späten Staatssozialismus und der Umbruchzeit",
+        link: "assets/audio/Gemeinsame-Kaempfe-geplatzte-Traeume.mp3",
+        tags: ["lokal", "Audio", "Vertiefung"]
       }
     ],
     questions: [
@@ -2165,13 +2185,13 @@ const MODULES = [
           "Lass zunächst sammeln, welche Emotionen in den Materialien vorkommen, und frage dann, wie sie Handlungen beeinflussen.",
         commonPitfall:
           "Oft werden Gefühle nur erwähnt, aber nicht als Faktor für Offenheit, Tempo und politische Entscheidungen ernst genommen.",
-        sourceIds: ["r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video", "r-ddr-verwandeln"],
+        sourceIds: ["r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video", "r-ddr-verwandeln", "r-audio-gemeinsame-kaempfe"],
         minWords: 145,
         structureExpectations: {
           mandatory: ["thesis", "evidence", "nuance", "conclusion"],
           targetHits: 5
         },
-        sourceHints: ["wendegefuehle", "herbst 1989", "fruehling 1990", "opposition", "einheit"],
+        sourceHints: ["wendegefuehle", "herbst 1989", "fruehling 1990", "opposition", "einheit", "traeume", "hoffnung", "enttaeuschung"],
         rubric: [
           { concept: "offene historische Situation", keywords: ["offen", "ungewiss", "nicht festgelegt", "kontingenz", "unsicherheit"] },
           { concept: "Gefühle als Handlungsfaktor", keywords: ["hoffnung", "angst", "euphorie", "verunsicherung", "motivation"] },
@@ -2186,22 +2206,4 @@ const MODULES = [
   }
 ];
 
-const AUDIO_LOUNGE = [
-  {
-    id: "audio-pr-reise",
-    title: "Eine PR-Reise ins Land des Erzfeindes",
-    description:
-      "Audioquelle als freiwilliger Hörimpuls zu Wahrnehmungen, Narrativen und Grenzüberschreitungen im Umfeld des Ost-West-Konflikts.",
-    src: "assets/audio/Eine-PR-Reise-ins-Land-des-Erzfeindes.mp3"
-  },
-  {
-    id: "audio-gemeinsame-kaempfe",
-    title: "Gemeinsame Kämpfe, geplatzte Träume",
-    description:
-      "Audioquelle für eine zusätzliche Vertiefung zu Hoffnungen, Konflikten und Enttäuschungen im späten Staatssozialismus.",
-    src: "assets/audio/Gemeinsame-Kaempfe-geplatzte-Traeume.mp3"
-  }
-];
-
 window.COLD_WAR_MODULES = MODULES;
-window.COLD_WAR_AUDIO = AUDIO_LOUNGE;

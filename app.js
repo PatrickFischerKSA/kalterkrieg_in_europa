@@ -2,7 +2,6 @@ const storageKey = "kalterkrieg-in-europa-progress";
 const teacherPassword = "kalter_krieg";
 const teacherPasswordAliases = ["kalter_krieg", "kalter krieg", "kalter-krieg", "kalterkrieg"];
 const modules = window.COLD_WAR_MODULES || [];
-const audioItems = window.COLD_WAR_AUDIO || [];
 const structureSpec = {
   thesis: ["ich argumentiere", "ich vertrete", "meine these", "entscheidend ist", "zentral ist", "ich bewerte"],
   evidence: ["das video", "das material", "die quelle", "zeigt", "deutlich wird", "im video", "im material"],
@@ -15,6 +14,7 @@ const state = {
   activeModuleId: modules[0]?.id || null,
   teacherAuthorized: false,
   teacherMode: false,
+  teacherAccessOpen: false,
   answers: {}
 };
 
@@ -22,18 +22,13 @@ const elements = {
   statsGrid: document.getElementById("stats-grid"),
   moduleNav: document.getElementById("module-nav"),
   moduleHeader: document.getElementById("module-header"),
+  teacherAccessPanel: document.getElementById("teacher-access-panel"),
   teacherPanel: document.getElementById("teacher-panel"),
   resourceGroups: document.getElementById("resource-groups"),
   questionList: document.getElementById("question-list"),
-  audioLounge: document.getElementById("audio-lounge"),
   startRouteButton: document.getElementById("start-route-button"),
   openFirstOpenButton: document.getElementById("open-first-open-button"),
-  teacherModeButton: document.getElementById("teacher-mode-button"),
-  teacherAuthLayer: document.getElementById("teacher-auth-layer"),
-  teacherAuthForm: document.getElementById("teacher-auth-form"),
-  teacherAuthCancel: document.getElementById("teacher-auth-cancel"),
-  teacherAuthStatus: document.getElementById("teacher-auth-status"),
-  teacherPasswordInput: document.getElementById("teacher-password")
+  teacherModeButton: document.getElementById("teacher-mode-button")
 };
 
 function loadStore() {
@@ -719,6 +714,15 @@ function renderResources(module) {
                     <div class="resource-actions">
                       <a class="btn ghost small" href="${escapeHtml(resource.link)}" target="_blank" rel="noreferrer">${actionLabel}</a>
                     </div>
+                    ${
+                      resource.type === "Audio"
+                        ? `
+                          <audio controls preload="none" class="audio-frame">
+                            <source src="${escapeHtml(resource.link)}" type="audio/mpeg" />
+                          </audio>
+                        `
+                        : ""
+                    }
                   </article>
                 `;
               })
@@ -994,25 +998,6 @@ function renderQuestions(module) {
   activateDragAndDrop();
 }
 
-function renderAudioLounge() {
-  elements.audioLounge.innerHTML = audioItems
-    .map(
-      (item) => `
-        <article class="audio-card">
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description)}</p>
-          <div class="resource-actions">
-            <a class="btn ghost small" href="${escapeHtml(item.src)}" target="_blank" rel="noreferrer">Datei öffnen</a>
-          </div>
-          <audio controls preload="none">
-            <source src="${escapeHtml(item.src)}" type="audio/mpeg" />
-          </audio>
-        </article>
-      `
-    )
-    .join("");
-}
-
 function collectUserInput(question) {
   if (question.type === "single-choice") {
     const selected = document.querySelector(`input[name="${question.id}"]:checked`);
@@ -1062,45 +1047,120 @@ function jumpToFirstOpenQuestion() {
   }
 }
 
-function openTeacherAuth() {
-  if (!elements.teacherAuthLayer) return;
-  elements.teacherAuthLayer.classList.remove("hidden");
-  elements.teacherAuthLayer.hidden = false;
-  elements.teacherAuthLayer.style.display = "grid";
-  elements.teacherAuthLayer.setAttribute("aria-hidden", "false");
-  elements.teacherAuthStatus.textContent = "";
-  elements.teacherPasswordInput.value = "";
-  requestAnimationFrame(() => elements.teacherPasswordInput.focus());
-}
-
-function closeTeacherAuth() {
-  if (!elements.teacherAuthLayer) return;
-  elements.teacherAuthLayer.classList.add("hidden");
-  elements.teacherAuthLayer.hidden = true;
-  elements.teacherAuthLayer.style.display = "none";
-  elements.teacherAuthLayer.setAttribute("aria-hidden", "true");
-  elements.teacherAuthStatus.textContent = "";
-}
-
 function unlockTeacherMode() {
   state.teacherAuthorized = true;
   state.teacherMode = true;
+  state.teacherAccessOpen = false;
   saveStore();
-  closeTeacherAuth();
   renderApp();
   requestAnimationFrame(() => {
     elements.questionList.closest(".panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
-function promptTeacherPassword() {
-  const value = window.prompt("Passwort für Lehrer*innenzugang:");
-  if (value == null) return;
-  if (!isTeacherPasswordValid(value)) {
-    window.alert("Passwort nicht korrekt.");
+function lockTeacherMode() {
+  state.teacherAuthorized = false;
+  state.teacherMode = false;
+  state.teacherAccessOpen = false;
+  saveStore();
+  renderApp();
+}
+
+function renderTeacherAccessPanel() {
+  if (!elements.teacherAccessPanel) return;
+
+  if (!state.teacherAuthorized && !state.teacherAccessOpen) {
+    elements.teacherAccessPanel.classList.add("hidden");
+    elements.teacherAccessPanel.innerHTML = "";
     return;
   }
-  unlockTeacherMode();
+
+  elements.teacherAccessPanel.classList.remove("hidden");
+
+  if (!state.teacherAuthorized) {
+    elements.teacherAccessPanel.innerHTML = `
+      <div class="teacher-access-wrap">
+        <div>
+          <p class="eyebrow">Lehrer*innenzugang</p>
+          <h2>Lehrpersonenmodus freischalten</h2>
+          <p class="section-copy">
+            Der Lehrpersonenmodus zeigt didaktische Hinweise direkt bei den Aufgaben und zusätzlich
+            eine einklappbare Diagnoseansicht unter dem Fragenraum.
+          </p>
+        </div>
+        <form class="teacher-access-form" id="teacher-access-form">
+          <label for="teacher-access-password">Passwort</label>
+          <input
+            id="teacher-access-password"
+            name="teacher-access-password"
+            type="password"
+            autocomplete="current-password"
+            autocapitalize="none"
+            autocorrect="off"
+            spellcheck="false"
+            placeholder="Passwort eingeben"
+            required
+          />
+          <div class="teacher-access-actions">
+            <button class="btn primary" type="submit">Freischalten</button>
+            <button class="btn ghost" type="button" id="teacher-access-close">Schließen</button>
+          </div>
+          <p class="teacher-access-status" id="teacher-access-status" aria-live="polite"></p>
+        </form>
+      </div>
+    `;
+
+    const form = document.getElementById("teacher-access-form");
+    const input = document.getElementById("teacher-access-password");
+    const status = document.getElementById("teacher-access-status");
+    const closeButton = document.getElementById("teacher-access-close");
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const value = input?.value.trim() || "";
+      if (!isTeacherPasswordValid(value)) {
+        if (status) status.textContent = "Passwort nicht korrekt.";
+        return;
+      }
+      unlockTeacherMode();
+    });
+
+    closeButton?.addEventListener("click", () => {
+      state.teacherAccessOpen = false;
+      renderTeacherAccessPanel();
+    });
+
+    requestAnimationFrame(() => input?.focus());
+    return;
+  }
+
+  elements.teacherAccessPanel.innerHTML = `
+    <div class="teacher-access-wrap teacher-access-status-card">
+      <div>
+        <p class="eyebrow">Lehrpersonenmodus</p>
+        <h2>${state.teacherMode ? "Didaktische Hinweise sind aktiv" : "Lehrkommentare sind ausgeblendet"}</h2>
+        <p class="section-copy">
+          ${state.teacherMode
+            ? "Unter den Aufgaben erscheinen jetzt Lehrkommentare. Die vertiefte Diagnoseansicht liegt eingeklappt unter dem Fragenraum."
+            : "Der Zugang ist freigeschaltet. Du kannst die Lehrkommentare jederzeit wieder einblenden."}
+        </p>
+      </div>
+      <div class="teacher-access-actions">
+        <button class="btn primary" type="button" id="teacher-access-toggle">
+          ${state.teacherMode ? "Lehrkommentare ausblenden" : "Lehrkommentare einblenden"}
+        </button>
+        <button class="btn ghost" type="button" id="teacher-access-lock">Zugang sperren</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("teacher-access-toggle")?.addEventListener("click", () => {
+    state.teacherMode = !state.teacherMode;
+    saveStore();
+    renderApp();
+  });
+
+  document.getElementById("teacher-access-lock")?.addEventListener("click", lockTeacherMode);
 }
 
 function renderApp() {
@@ -1115,18 +1175,18 @@ function renderApp() {
     state.teacherMode = false;
   }
   elements.teacherModeButton.textContent = state.teacherMode
-    ? "Lehrpersonenmodus aktiv"
+    ? "Lehrkommentare ausblenden"
     : state.teacherAuthorized
-      ? "Lehrpersonenmodus einschalten"
+      ? "Lehrkommentare einblenden"
       : "Lehrer*innenzugang";
   elements.teacherModeButton.classList.toggle("is-active", state.teacherMode);
+  renderTeacherAccessPanel();
   renderStats();
   renderModuleNav();
   renderModuleHeader(module);
   renderTeacherPanel(module);
   renderResources(module);
   renderQuestions(module);
-  renderAudioLounge();
 }
 
 elements.startRouteButton.addEventListener("click", () => {
@@ -1138,7 +1198,13 @@ elements.startRouteButton.addEventListener("click", () => {
 elements.openFirstOpenButton.addEventListener("click", jumpToFirstOpenQuestion);
 elements.teacherModeButton.addEventListener("click", () => {
   if (!state.teacherAuthorized) {
-    promptTeacherPassword();
+    state.teacherAccessOpen = !state.teacherAccessOpen;
+    renderTeacherAccessPanel();
+    if (state.teacherAccessOpen) {
+      requestAnimationFrame(() => {
+        elements.teacherAccessPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
     return;
   }
   state.teacherMode = !state.teacherMode;
@@ -1146,24 +1212,8 @@ elements.teacherModeButton.addEventListener("click", () => {
   renderApp();
 });
 
-elements.teacherAuthForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const value = elements.teacherPasswordInput.value.trim();
-  if (!isTeacherPasswordValid(value)) {
-    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt.";
-    return;
-  }
-  unlockTeacherMode();
-});
-
-elements.teacherAuthCancel.addEventListener("click", closeTeacherAuth);
-elements.teacherAuthLayer.querySelectorAll("[data-close-teacher-auth]").forEach((entry) => {
-  entry.addEventListener("click", closeTeacherAuth);
-});
-
 const persisted = loadStore();
 state.answers = persisted.answers;
 state.teacherMode = persisted.teacherMode;
 state.teacherAuthorized = persisted.teacherAuthorized;
-closeTeacherAuth();
 renderApp();
