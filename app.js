@@ -925,7 +925,10 @@ function jumpToFirstOpenQuestion() {
 }
 
 function openTeacherAuth() {
+  if (!elements.teacherAuthLayer) return;
   elements.teacherAuthLayer.classList.remove("hidden");
+  elements.teacherAuthLayer.hidden = false;
+  elements.teacherAuthLayer.style.display = "grid";
   elements.teacherAuthLayer.setAttribute("aria-hidden", "false");
   elements.teacherAuthStatus.textContent = "";
   elements.teacherPasswordInput.value = "";
@@ -933,9 +936,33 @@ function openTeacherAuth() {
 }
 
 function closeTeacherAuth() {
+  if (!elements.teacherAuthLayer) return;
   elements.teacherAuthLayer.classList.add("hidden");
+  elements.teacherAuthLayer.hidden = true;
+  elements.teacherAuthLayer.style.display = "none";
   elements.teacherAuthLayer.setAttribute("aria-hidden", "true");
   elements.teacherAuthStatus.textContent = "";
+}
+
+function unlockTeacherMode() {
+  state.teacherAuthorized = true;
+  state.teacherMode = true;
+  saveStore();
+  closeTeacherAuth();
+  renderApp();
+  requestAnimationFrame(() => {
+    elements.teacherPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+function promptTeacherPassword() {
+  const value = window.prompt("Passwort für Lehrer*innenzugang:");
+  if (value == null) return;
+  if (!isTeacherPasswordValid(value)) {
+    window.alert("Passwort nicht korrekt.");
+    return;
+  }
+  unlockTeacherMode();
 }
 
 function renderApp() {
@@ -973,7 +1000,7 @@ elements.startRouteButton.addEventListener("click", () => {
 elements.openFirstOpenButton.addEventListener("click", jumpToFirstOpenQuestion);
 elements.teacherModeButton.addEventListener("click", () => {
   if (!state.teacherAuthorized) {
-    openTeacherAuth();
+    promptTeacherPassword();
     return;
   }
   state.teacherMode = !state.teacherMode;
@@ -985,17 +1012,10 @@ elements.teacherAuthForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const value = elements.teacherPasswordInput.value.trim();
   if (!isTeacherPasswordValid(value)) {
-    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt. Probiere: kalter_krieg";
+    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt.";
     return;
   }
-  state.teacherAuthorized = true;
-  state.teacherMode = true;
-  saveStore();
-  closeTeacherAuth();
-  renderApp();
-  requestAnimationFrame(() => {
-    elements.teacherPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  unlockTeacherMode();
 });
 
 elements.teacherAuthCancel.addEventListener("click", closeTeacherAuth);
@@ -1007,4 +1027,5 @@ const persisted = loadStore();
 state.answers = persisted.answers;
 state.teacherMode = persisted.teacherMode;
 state.teacherAuthorized = persisted.teacherAuthorized;
+closeTeacherAuth();
 renderApp();
