@@ -89,34 +89,52 @@ const MODULES = [
     questions: [
       {
         id: "q-ueberblick-1",
-        type: "single-choice",
-        challenge: "Faktencheck",
+        type: "short-text",
+        challenge: "Begriffsarbeit",
         prompt:
-          "Welche Aussage trifft den Begriff Kalter Krieg am besten?",
+          "Erkläre den Begriff 'Kalter Krieg' so, dass Machtpolitik, Ideologie und indirekte Konfliktformen zusammen sichtbar werden.",
         help:
-          "Wähle die Antwort, die Machtpolitik, ideologischen Gegensatz und indirekte Austragungsformen zusammenbringt.",
+          "Die Sofortkorrektur prüft drei Sinnschichten. Schreibe keine Stichwortliste, sondern einen knappen Erklärungssatz.",
+        placeholder: "Der Kalte Krieg war ...",
         sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2"],
-        options: [
+        conceptGroups: [
           {
-            id: "a",
-            text: "Ein direkter militärischer Krieg zwischen USA und UdSSR mit einer einzigen Front in Deutschland."
+            label: "globaler System- oder Machtkonflikt",
+            variants: [
+              "systemkonflikt",
+              "machtkonflikt",
+              "ost west konflikt",
+              "supermaechte",
+              "usa und udssr",
+              "globale rivalitaet"
+            ]
           },
           {
-            id: "b",
-            text: "Ein globaler Systemkonflikt zwischen den Supermächten, der meist indirekt über Abschreckung, Stellvertreterkonflikte und Einflusszonen ausgetragen wurde."
+            label: "ideologischer Gegensatz",
+            variants: [
+              "ideologie",
+              "kapitalismus",
+              "kommunismus",
+              "demokratie gegen sozialismus",
+              "gesellschaftsmodelle",
+              "weltanschaulich"
+            ]
           },
           {
-            id: "c",
-            text: "Eine reine Wirtschaftskrise Europas ohne ideologische oder militärische Dimension."
-          },
-          {
-            id: "d",
-            text: "Ein ausschließlich deutsches Problem, das nach der Gründung von BRD und DDR beendet war."
+            label: "indirekte Austragung durch Abschreckung, Bündnisse oder Stellvertreter",
+            variants: [
+              "abschreckung",
+              "stellvertreterkrieg",
+              "indirekt",
+              "buendnisse",
+              "einflusszonen",
+              "kein direkter krieg"
+            ]
           }
         ],
-        correctOptionId: "b",
-        explanation:
-          "Der Kalte Krieg war kein heisser Grosskrieg zwischen den Supermächten, sondern ein globaler System- und Machtkonflikt mit Abschreckung, Bündnispolitik, Propaganda und Stellvertreterkriegen."
+        successThreshold: 3,
+        modelAnswer:
+          "Der Kalte Krieg war ein globaler Macht- und Systemkonflikt zwischen den Supermächten, der von gegensätzlichen Ideologien geprägt war. Er blieb meist indirekt und wurde über Abschreckung, Bündnisse, Einflusszonen und Stellvertreterkonflikte ausgetragen."
       },
       {
         id: "q-ueberblick-2",
@@ -206,23 +224,40 @@ const MODULES = [
       },
       {
         id: "q-ueberblick-4",
-        type: "multi-select",
-        challenge: "Strukturanalyse",
+        type: "drag-order",
+        challenge: "Strukturierung",
         prompt:
-          "Welche Entwicklungen trugen besonders dazu bei, dass aus der Nachkriegskooperation der Siegermächte ein dauerhafter Ost-West-Konflikt wurde?",
+          "Ordne die Entwicklungsschritte so, dass aus der Nachkriegsordnung die verfestigte Blockkonfrontation erkennbar wird.",
         help:
-          "Mehrere Antworten sind richtig. Entscheidend sind sicherheitspolitische, wirtschaftliche und machtpolitische Faktoren.",
+          "Beginne mit der gemeinsamen Besatzungsordnung und ende mit der offenen Deutschland- und Berlin-Krise.",
         sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2", "r-kalterkrieg-pdf"],
-        options: [
-          { id: "a", text: "gegenseitiges Misstrauen und unvereinbare Sicherheitsvorstellungen der Siegermächte" },
-          { id: "b", text: "die wirtschaftliche und politische Blockbildung, etwa durch Marshallplan und sowjetische Gegenordnung" },
-          { id: "c", text: "die deutsche Frage und Berlin als zugespitzter Konfliktraum" },
-          { id: "d", text: "ein sofortiger gemeinsamer Rückzug aller Besatzungsmächte aus Europa" },
-          { id: "e", text: "der ideologische Gegensatz zwischen liberal-demokratischem und kommunistischem Ordnungsmodell" }
+        items: [
+          {
+            id: "besatzungsordnung",
+            label: "Deutschland und Berlin stehen zunächst unter gemeinsamer Viermächtekontrolle.",
+            detail: "Die Nachkriegsordnung beginnt noch als gemeinsame Besatzungsstruktur."
+          },
+          {
+            id: "misstrauen",
+            label: "Zwischen den Siegermächten wachsen Misstrauen und gegensätzliche Sicherheits- und Ordnungsvorstellungen.",
+            detail: "Kooperation schlägt in ideologische und machtpolitische Konkurrenz um."
+          },
+          {
+            id: "blockbildung",
+            label: "Wirtschaftshilfe, Gegenmodelle und Bündnispolitik treiben die Blockbildung voran.",
+            detail: "Marshallplan und sowjetische Gegenordnung binden Staaten an rivalisierende Lager."
+          },
+          {
+            id: "berlinkrise",
+            label: "Deutschland und besonders Berlin werden zum sichtbaren Krisenraum des neuen Ost-West-Konflikts.",
+            detail: "Blockade, Luftbrücke und Staatsgründungen verdichten den Konflikt."
+          }
         ],
-        correctOptionIds: ["a", "b", "c", "e"],
+        correctOrder: ["besatzungsordnung", "misstrauen", "blockbildung", "berlinkrise"],
         explanation:
-          "Aus Kooperation wurde Konflikt, weil Sicherheitsinteressen, Ideologie, Wirtschaft und die deutsche Frage ineinandergriffen. Ein gemeinsamer Rückzug der Mächte fand gerade nicht statt."
+          "Historisch verdichtete sich der Konflikt Schritt für Schritt: von der gemeinsamen Besatzungsordnung über wachsendes Misstrauen zur Blockbildung und schließlich zur sichtbaren Krisenzuspitzung in Deutschland und Berlin.",
+        modelAnswer:
+          "Die Entwicklung verläuft von der gemeinsamen Nachkriegsverwaltung über ideologische und sicherheitspolitische Entfremdung zur politischen und wirtschaftlichen Blockbildung. In Deutschland und Berlin wurde diese Entwicklung besonders sichtbar und konfliktträchtig."
       },
       {
         id: "q-ueberblick-5",
@@ -281,6 +316,65 @@ const MODULES = [
         ],
         modelAnswer:
           "Die Aussage trifft einen wichtigen Kern, greift aber allein zu kurz. Unmittelbar nach 1945 war Deutschland stark Objekt der Siegermächte und ihrer Besatzungspolitik. Gerade Berlin zeigte diese Fremdbestimmung besonders deutlich. Mit der Entstehung von BRD und DDR entstanden jedoch begrenzte eigene Handlungsspielräume, sodass Deutschland zwar vor allem Konfliktraum blieb, aber nicht völlig passiv war."
+      },
+      {
+        id: "q-ueberblick-7",
+        type: "short-text",
+        challenge: "Vertiefung",
+        prompt:
+          "Warum war Wirtschaftshilfe im frühen Kalten Krieg nie nur Wirtschaft, sondern immer auch Machtpolitik?",
+        help:
+          "Nenne mindestens drei Aspekte: Bindung, Legitimationsgewinn und Systemkonkurrenz.",
+        placeholder: "Wirtschaftshilfe war politisch, weil ...",
+        sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2", "r-kalterkrieg-pdf"],
+        conceptGroups: [
+          {
+            label: "politische oder bündnispolitische Bindung",
+            variants: ["bindung", "lager", "einfluss", "an den westen binden", "machtbereich", "abhaengigkeit"]
+          },
+          {
+            label: "Versorgung, Aufbau oder Legitimationsgewinn",
+            variants: ["aufbau", "versorgung", "wohlstand", "legitimation", "stabilisierung", "hilfeprogramm"]
+          },
+          {
+            label: "Systemkonkurrenz statt Neutralität",
+            variants: ["systemkonkurrenz", "nicht neutral", "ideologisch", "konkurrenz der modelle", "propaganda", "ordnungsvorstellung"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Wirtschaftshilfe war im frühen Kalten Krieg Machtpolitik, weil sie Staaten wirtschaftlich stabilisierte und zugleich politisch an ein Lager band. Sie sollte die eigene Ordnung attraktiver machen, Legitimation schaffen und den Einfluss des Gegners zurückdrängen."
+      },
+      {
+        id: "q-ueberblick-8",
+        type: "open-analysis",
+        challenge: "Deutung",
+        prompt:
+          "Prüfe die Verkürzung: 'Der Kalte Krieg war einfach ein Konflikt USA gegen UdSSR.' Zeige, was an der Formel stimmt und was sie historisch ausblendet.",
+        help:
+          "Die stärkste Antwort arbeitet mit Zustimmung und Korrektur zugleich: Supermächte ja, aber nicht nur.",
+        placeholder: "Die Formel ist eingängig, aber historisch verkürzt, weil ...",
+        teacherPrompt:
+          "Lass zuerst sammeln, warum die Formel attraktiv ist, und frage dann, welche Ebenen dadurch unsichtbar werden.",
+        commonPitfall:
+          "Oft wird die Formel nur zurückgewiesen, ohne ihren wahren Kern zu benennen: die reale Dominanz der Supermächte.",
+        sourceIds: ["r-kalterkrieg-video-1", "r-kalterkrieg-video-2", "r-kalterkrieg-pdf", "r-zusammenfassung-fragen"],
+        minWords: 140,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "nuance", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["usa", "udssr", "deutschland", "berlin", "marshallplan", "abschreckung"],
+        rubric: [
+          { concept: "Supermächte als zentrales Machtzentrum", keywords: ["usa", "udssr", "supermaechte", "washington", "moskau"] },
+          { concept: "Ideologische Dimension", keywords: ["ideologie", "kapitalismus", "kommunismus", "gesellschaftsordnung", "weltanschauung"] },
+          { concept: "wirtschaftliche und bündnispolitische Ebene", keywords: ["marshallplan", "wirtschaft", "buendnis", "blockbildung", "hilfe"] },
+          { concept: "Deutschland oder Berlin als Konfliktraum", keywords: ["deutschland", "berlin", "besatzung", "blockade", "luftbruecke"] },
+          { concept: "indirekte Austragungsformen", keywords: ["abschreckung", "stellvertreter", "einflusszonen", "indirekt", "wettruesten"] },
+          { concept: "abwägendes Urteil zur Formel", keywords: ["einerseits", "andererseits", "verkürzt", "zutreffend", "greift zu kurz"] }
+        ],
+        modelAnswer:
+          "Die Formel trifft insofern zu, als USA und UdSSR die zentralen Machtpole des Konflikts waren. Sie blendet aber aus, dass der Kalte Krieg zugleich ein ideologischer, wirtschaftlicher und globaler Ordnungskonflikt war, in dem Deutschland und Berlin eine besondere Rolle spielten. Außerdem wurde der Gegensatz meist nicht in direkter militärischer Konfrontation, sondern über Abschreckung, Bündnisse und indirekte Konfliktformen ausgetragen."
       }
     ]
   },
@@ -356,23 +450,40 @@ const MODULES = [
     questions: [
       {
         id: "q-teilung-1",
-        type: "multi-select",
-        challenge: "Vergleich",
+        type: "drag-order",
+        challenge: "Chronologie",
         prompt:
-          "Welche Entwicklungen vertieften 1948/49 die Teilung Deutschlands besonders stark?",
+          "Ordne die Entwicklung so, dass die Zuspitzung von der Berlin-Krise zu zwei deutschen Staaten sichtbar wird.",
         help:
-          "Mehrere Antworten sind richtig. Gesucht sind die Schritte, die aus der Krisenlage zwei Staatsprojekte machten.",
+          "Sortiere die vier Karten in eine historisch schlüssige Reihenfolge für 1948/49.",
         sourceIds: ["r-ddr-gruendung-1", "r-brd-gruendung"],
-        options: [
-          { id: "a", text: "die Währungsreform und die daraus folgende Zuspitzung in Berlin" },
-          { id: "b", text: "die Gründung von BRD und DDR als zwei unterschiedliche Staatsordnungen" },
-          { id: "c", text: "die Berlin-Blockade und die Luftbrücke als Symbol politischer Konfrontation" },
-          { id: "d", text: "die völlige Aufhebung aller Besatzungsrechte im Jahr 1948" },
-          { id: "e", text: "die zunehmende Einbindung der westlichen Zonen in westliche Wirtschafts- und Sicherheitsstrukturen" }
+        items: [
+          {
+            id: "waehrungsreform",
+            label: "Die Währungsreform verschärft 1948 den Konflikt über die Ordnung der Westzonen.",
+            detail: "Sie markiert einen zentralen Schritt zur politischen und wirtschaftlichen Trennung."
+          },
+          {
+            id: "berlinkrise",
+            label: "Die Berlin-Blockade und die Luftbrücke machen die Spaltung öffentlich sichtbar.",
+            detail: "Berlin wird zum Symbolraum der Konfrontation."
+          },
+          {
+            id: "brd",
+            label: "Mit dem Grundgesetz und der Bundesrepublik entsteht ein westlich eingebundener westdeutscher Staat.",
+            detail: "Die Westzonen erhalten eine eigene staatliche Form."
+          },
+          {
+            id: "ddr",
+            label: "Die DDR wird als sozialistischer Staat in der sowjetischen Besatzungszone gegründet.",
+            detail: "Damit ist die Teilung institutionell vollzogen."
+          }
         ],
-        correctOptionIds: ["a", "b", "c", "e"],
+        correctOrder: ["waehrungsreform", "berlinkrise", "brd", "ddr"],
         explanation:
-          "Gerade Währungsreform, Berlin-Krise, Staatsgründungen und die westliche Integration trieben die Trennung voran. Von einer vollständigen Aufhebung aller Besatzungsrechte kann 1948 keine Rede sein."
+          "Währungsreform und Berlin-Krise verschärften 1948 den Konflikt. 1949 erhielt die Spaltung mit BRD und DDR dann eine feste staatliche Form.",
+        modelAnswer:
+          "Die Zuspitzung begann mit der Währungsreform und führte über die Berlin-Blockade zur offenen Konfrontation. Erst danach entstanden mit BRD und DDR zwei gegensätzliche Staaten auf deutschem Boden."
       },
       {
         id: "q-teilung-2",
@@ -454,22 +565,31 @@ const MODULES = [
       },
       {
         id: "q-teilung-4",
-        type: "single-choice",
+        type: "short-text",
         challenge: "Einordnung",
         prompt:
-          "Welche Deutung beschreibt die Staatsgründungen von 1949 historisch am treffendsten?",
+          "Warum war die deutsche Frage 1949 trotz zweier Staatsgründungen noch nicht endgültig gelöst?",
         help:
-          "Gesucht ist nicht die formale, sondern die politisch-historische Einordnung.",
+          "Nenne mindestens drei Gründe: internationale Lage, Berlin und konkurrierende Ansprüche.",
+        placeholder: "1949 blieb die deutsche Frage offen, weil ...",
         sourceIds: ["r-ddr-gruendung-1", "r-ddr-gruendung-2", "r-brd-gruendung"],
-        options: [
-          { id: "a", text: "Beide Staaten entstanden als nahezu identische demokratische Übergangsmodelle mit nur geringen Unterschieden." },
-          { id: "b", text: "Die Staatsgründungen waren Ausdruck der verfestigten Blockkonfrontation und schufen zwei gegensätzliche politische Ordnungen auf deutschem Boden." },
-          { id: "c", text: "Die DDR wurde allein aus innerdeutscher Initiative gegründet, ohne sowjetischen Einfluss." },
-          { id: "d", text: "Mit 1949 war die deutsche Frage vollständig gelöst und verlor international an Bedeutung." }
+        conceptGroups: [
+          {
+            label: "fortbestehender Ost-West-Konflikt oder Besatzungseinfluss",
+            variants: ["ost west konflikt", "besatzungsrechte", "siegermächte", "alliierte", "kalter krieg", "blockkonfrontation"]
+          },
+          {
+            label: "Berlin blieb ein offener Konfliktraum",
+            variants: ["berlin", "viermaechte", "blockade", "krisenraum", "nicht geklaert", "geteiltes berlin"]
+          },
+          {
+            label: "konkurrierende Deutschlandansprüche oder Wiedervereinigungsfrage",
+            variants: ["wiedervereinigung", "gesamtdeutsch", "anspruch fuer ganz deutschland", "offene nationale frage", "beide beanspruchten", "nicht endgueltig"]
+          }
         ],
-        correctOptionId: "b",
-        explanation:
-          "1949 markierte die institutionelle Zuspitzung des Kalten Krieges in Deutschland: Zwei Staaten entstanden, aber nicht als bloße Verwaltungsmodelle, sondern als gegensätzliche Ordnungsentwürfe im Ost-West-Konflikt."
+        successThreshold: 3,
+        modelAnswer:
+          "1949 war die deutsche Frage nicht gelöst, weil die Teilung Teil des internationalen Ost-West-Konflikts blieb. Berlin blieb ein besonders offener Krisenraum, und beide Staaten standen weiter im Schatten der Siegermächte und konkurrierender Vorstellungen über Deutschlands Zukunft."
       },
       {
         id: "q-teilung-5",
@@ -528,6 +648,64 @@ const MODULES = [
         ],
         modelAnswer:
           "Beide Staaten beschrieben sich normativ, aber nicht in gleicher Weise realitätsnah. In der BRD entsprach die demokratische Selbstbeschreibung stärker der institutionellen Ordnung, auch wenn Besatzungseinflüsse und Westbindung Grenzen setzten. In der DDR dagegen verdeckte die Sprache vom antifaschistisch-sozialistischen Neubeginn die tatsächliche Machtstellung der SED. Gerade der Vergleich zeigt, dass politische Gründungsrhetorik nicht automatisch politische Realität beschreibt."
+      },
+      {
+        id: "q-teilung-7",
+        type: "short-text",
+        challenge: "Vertiefung",
+        prompt:
+          "Worin lag die politische Asymmetrie zwischen der Gründung der BRD und der Gründung der DDR?",
+        help:
+          "Nenne mindestens drei Punkte: Verfassungsordnung, Parteimacht und Verhältnis zu den Besatzungsmächten.",
+        placeholder: "Die Staatsgründungen waren asymmetrisch, weil ...",
+        sourceIds: ["r-ddr-gruendung-1", "r-ddr-gruendung-2", "r-brd-gruendung"],
+        conceptGroups: [
+          {
+            label: "BRD mit parlamentarischer oder föderaler Ordnung",
+            variants: ["grundgesetz", "parlamentarisch", "foederal", "pluralismus", "bundesrepublik", "parlamentarischer rat"]
+          },
+          {
+            label: "DDR mit führender Rolle der SED",
+            variants: ["sed", "einparteienherrschaft", "parteimacht", "sozialistischer staat", "gelenkt", "volksdemokratie"]
+          },
+          {
+            label: "unterschiedlicher Spielraum gegenüber den Besatzungsmächten",
+            variants: ["sowjetischer einfluss", "westintegration", "besatzungsmaechte", "alliierte", "abhaengigkeit", "unterschiedliche kontrolle"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Die Gründungen waren asymmetrisch, weil die BRD eine stärker parlamentarisch-pluralistische und föderale Ordnung erhielt, während die DDR früh von der SED dominiert wurde. Beide standen zwar unter dem Einfluss der Besatzungsmächte, aber in sehr unterschiedlicher politischer Form und mit unterschiedlichen Freiheitsgraden."
+      },
+      {
+        id: "q-teilung-8",
+        type: "open-analysis",
+        challenge: "Urteil",
+        prompt:
+          "Bewerte die These: 'Die deutsche Teilung war 1949 kein naturwüchsiges Ergebnis, sondern politisch gemacht.' Nutze dafür die Zuspitzung von 1948/49 und die unterschiedlichen Staatsentwürfe.",
+        help:
+          "Zeige in deiner Antwort, welche Entscheidungen, Interessen und Machtverhältnisse die Teilung hervorgebracht haben.",
+        placeholder: "Die Teilung war politisch gemacht, weil ...",
+        teacherPrompt:
+          "Lass die Lernenden erst die Krisenschritte von 1948/49 rekonstruieren und dann fragen, welche Alternativen jeweils kleiner wurden.",
+        commonPitfall:
+          "Viele Antworten sprechen nur abstrakt von 'den Alliierten', ohne konkrete Entscheidungen wie Währungsreform, Berlin-Krise oder Staatsgründungen einzubeziehen.",
+        sourceIds: ["r-ddr-gruendung-1", "r-ddr-gruendung-2", "r-brd-gruendung"],
+        minWords: 135,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "comparison", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["waehrungsreform", "berlin", "grundgesetz", "ddr", "sed", "westintegration"],
+        rubric: [
+          { concept: "Zuspitzung 1948/49", keywords: ["waehrungsreform", "berlin blockade", "luftbruecke", "1948", "1949"] },
+          { concept: "Rolle der Besatzungsmächte", keywords: ["sowjetunion", "westmaechte", "alliierte", "besatzung", "siegermächte"] },
+          { concept: "politische Entscheidungen statt Automatismus", keywords: ["entscheidung", "nicht zwangsläufig", "gemacht", "interessen", "politik"] },
+          { concept: "gegensätzliche Staatsentwürfe", keywords: ["grundgesetz", "foederal", "sed", "sozialistisch", "ordnung"] },
+          { concept: "Abwägendes Urteil", keywords: ["zugleich", "einerseits", "andererseits", "insgesamt", "deshalb"] }
+        ],
+        modelAnswer:
+          "Die Teilung war politisch gemacht, weil sie aus konkreten Entscheidungen, Machtinteressen und Eskalationen hervorging. Währungsreform, Berlin-Krise und die staatsrechtliche Festigung von BRD und DDR schufen keine bloß technische Trennung, sondern zwei gegensätzliche Ordnungsentwürfe. Zugleich zeigt der Blick auf 1948/49, dass die Teilung nicht schicksalhaft war, sondern Ergebnis einer sich verhärtenden Blockpolitik."
       }
     ]
   },
@@ -675,23 +853,31 @@ const MODULES = [
     questions: [
       {
         id: "q-alltag-1",
-        type: "multi-select",
+        type: "short-text",
         challenge: "Vergleich",
         prompt:
-          "Welche Spannungen des DDR-Alltags werden durch die Materialien besonders deutlich?",
+          "Beschreibe den DDR-Alltag so, dass soziale Leistungen und systemische Grenzen gleichzeitig sichtbar werden.",
         help:
-          "Gesucht ist kein einseitiges Urteil, sondern die Kombination von sozialer Absicherung und strukturellen Grenzen.",
+          "Nenne mindestens drei Ebenen: soziale Sicherheit, politische Steuerung und Mangel oder Privilegierung.",
+        placeholder: "Der DDR-Alltag war widersprüchlich, weil ...",
         sourceIds: ["r-reiseweltmeister", "r-bananenrepublik-video", "r-frauenland-video", "r-wohnraumvergabe"],
-        options: [
-          { id: "a", text: "soziale Sicherheit und staatliche Versorgung gingen oft mit Mangel und eingeschränkter Wahlfreiheit zusammen" },
-          { id: "b", text: "Urlaub und Wohnen waren völlig unpolitische Privatsachen ohne staatlichen Einfluss" },
-          { id: "c", text: "Frauen hatten häufig früher Erwerbschancen als im Westen, trugen aber trotzdem oft die Doppelbelastung" },
-          { id: "d", text: "Konsumwürde war bedeutungslos; der Vergleich mit dem Westen spielte im Alltag keine Rolle" },
-          { id: "e", text: "Privilegien, Knappheit und politische Steuerung prägten selbst scheinbar alltägliche Bereiche" }
+        conceptGroups: [
+          {
+            label: "soziale Leistungen oder Absicherung",
+            variants: ["soziale sicherheit", "arbeit", "betreuung", "versorgung", "urlaub", "wohnung", "kita"]
+          },
+          {
+            label: "staatliche Steuerung oder Kontrolle",
+            variants: ["staatlich gesteuert", "kontrolle", "zuteilung", "planung", "behoerden", "politisch reguliert"]
+          },
+          {
+            label: "Mangel, Privilegien oder Westvergleich",
+            variants: ["mangel", "wartezeit", "knappheit", "privilegien", "westvergleich", "wahlfreiheit", "konsum"]
+          }
         ],
-        correctOptionIds: ["a", "c", "e"],
-        explanation:
-          "Gerade die Ambivalenz ist entscheidend: staatliche Leistungen existierten, zugleich waren Versorgung, Wahlfreiheit und Zugang häufig politisch oder planwirtschaftlich begrenzt."
+        successThreshold: 3,
+        modelAnswer:
+          "Der DDR-Alltag war ambivalent: Es gab soziale Sicherheiten wie Arbeit, Betreuung oder organisierte Urlaubsangebote. Zugleich waren viele Lebensbereiche staatlich gesteuert, von Zuteilungen und Mangel geprägt und ständig dem Vergleich mit dem Westen ausgesetzt."
       },
       {
         id: "q-alltag-2",
@@ -754,22 +940,40 @@ const MODULES = [
       },
       {
         id: "q-alltag-4",
-        type: "single-choice",
-        challenge: "Einordnung",
+        type: "drag-order",
+        challenge: "Strukturierung",
         prompt:
-          "Warum waren Reisen und Urlaub in der DDR mehr als bloße Freizeitfragen?",
+          "Ordne die Kette so, dass aus dem sozialstaatlichen Versprechen der DDR ein Alltags- und Legitimationsproblem wird.",
         help:
-          "Gesucht ist die politische Bedeutung von Bewegungsfreiheit und staatlicher Steuerung.",
+          "Die Reihenfolge soll vom Versprechen über die Steuerung bis zum politischen Problem führen.",
         sourceIds: ["r-reiseweltmeister", "r-reisen-docx"],
-        options: [
-          { id: "a", text: "Weil Reisen völlig privat organisiert und vom Staat kaum beeinflusst wurden." },
-          { id: "b", text: "Weil sich an Reisen zeigte, wie stark der Staat Mobilität, Devisen und Kontakte nach außen kontrollierte." },
-          { id: "c", text: "Weil Urlaub in der DDR grundsätzlich nur für Parteifunktionäre möglich war." },
-          { id: "d", text: "Weil internationale Fernreisen für alle Bürgerinnen und Bürger selbstverständlich waren." }
+        items: [
+          {
+            id: "versprechen",
+            label: "Der Staat verspricht Versorgung, Arbeit, Wohnung und planbare Lebensläufe.",
+            detail: "Alltagssicherheit ist ein zentrales Element der sozialistischen Selbstlegitimation."
+          },
+          {
+            id: "steuerung",
+            label: "Zugang zu Wohnen, Reisen und Konsum wird über Betriebe, Behörden und Zuteilung gesteuert.",
+            detail: "Alltag ist damit nie rein privat, sondern organisatorisch und politisch reguliert."
+          },
+          {
+            id: "mangel",
+            label: "Knappheit, Wartezeiten und Privilegien machen die Grenzen des Systems erfahrbar.",
+            detail: "Gerade im scheinbar Kleinen entsteht Frustration über Ungleichheit und Mangel."
+          },
+          {
+            id: "legitimation",
+            label: "Im Vergleich mit dem Westen wird Alltag zur Frage politischer Glaubwürdigkeit und Legitimation.",
+            detail: "Versorgung und Freiheit entscheiden mit über die Bewertung des Systems."
+          }
         ],
-        correctOptionId: "b",
+        correctOrder: ["versprechen", "steuerung", "mangel", "legitimation"],
         explanation:
-          "Reisen war politisch, weil sich daran Kontrolle, Privilegierung, Knappheit und fehlende Freizügigkeit besonders deutlich ablesen ließen."
+          "Die DDR legitimierte sich stark über Alltag und Versorgung. Gerade deshalb wurden staatliche Steuerung, Mangel und Westvergleich politisch explosiv.",
+        modelAnswer:
+          "Die Logik reicht vom sozialstaatlichen Versprechen über die politische Organisation des Alltags zu erfahrbaren Grenzen wie Knappheit und Privilegien. Daraus entstand ein Legitimationsproblem, weil Alltagserfahrungen direkt auf die Glaubwürdigkeit des Systems zurückwirkten."
       },
       {
         id: "q-alltag-5",
@@ -828,6 +1032,64 @@ const MODULES = [
         ],
         modelAnswer:
           "Alltag und Konsum waren in der DDR politisch zentral, weil sich Herrschaft nicht nur in Ideologie, sondern auch in der erlebten Lebensqualität bewähren musste. Wohnung, Arbeit, Urlaub oder Konsumgüter wurden staatlich organisiert und damit zu Legitimitätsfragen. Gerade Mangel, Wartezeiten und der ständige Vergleich mit dem Westen machten sichtbar, dass politische Stabilität im Alltag gewonnen, aber auch verloren werden konnte."
+      },
+      {
+        id: "q-alltag-7",
+        type: "short-text",
+        challenge: "Vertiefung",
+        prompt:
+          "Warum war Reisefreiheit in der DDR eine besonders heikle Legitimitätsfrage?",
+        help:
+          "Nenne mindestens drei Aspekte: Freiheit, Kontrolle nach außen und Vergleich mit dem Westen.",
+        placeholder: "Reisefreiheit war politisch heikel, weil ...",
+        sourceIds: ["r-reiseweltmeister", "r-reisen-docx", "r-geld-regiert-ddr"],
+        conceptGroups: [
+          {
+            label: "individuelle Freiheit oder Selbstbestimmung",
+            variants: ["freiheit", "selbstbestimmung", "bewegungsfreiheit", "reisen duerfen", "eigenes leben", "ausreise"]
+          },
+          {
+            label: "staatliche Kontrolle von Kontakten, Devisen oder Abwanderung",
+            variants: ["kontrolle", "devisen", "kontakte nach aussen", "abwanderung", "genehmigung", "staat steuerte"]
+          },
+          {
+            label: "Westvergleich oder Unzufriedenheit",
+            variants: ["westvergleich", "unzufriedenheit", "sehnsucht", "ungleichheit", "westen", "legitimation"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Reisefreiheit war in der DDR heikel, weil sie unmittelbar mit persönlicher Freiheit zusammenhing. Zugleich wollte der Staat Kontakte nach außen, Devisenströme und mögliche Abwanderung kontrollieren. Gerade im Vergleich mit westlicher Bewegungsfreiheit wurde daraus ein ernstes Legitimationsproblem."
+      },
+      {
+        id: "q-alltag-8",
+        type: "open-analysis",
+        challenge: "Urteil",
+        prompt:
+          "Prüfe, ob alltagsgeschichtliche Perspektiven die DDR 'milder' erscheinen lassen oder ob sie die Diktatur gerade genauer sichtbar machen.",
+        help:
+          "Verbinde Alltag, soziale Praxis, Herrschaft und Freiheitsgrenzen in einer abwägenden Antwort.",
+        placeholder: "Alltagsgeschichte macht die DDR nicht einfach milder, sondern ...",
+        teacherPrompt:
+          "Fordere die Lernenden dazu auf, erst konkrete Alltagsfelder zu nennen und erst danach ein Gesamturteil zu formulieren.",
+        commonPitfall:
+          "Oft wird 'Alltag' mit 'Unpolitisch' verwechselt. Genau diese Trennung soll die Antwort historisch hinterfragen.",
+        sourceIds: ["r-bananenrepublik-video", "r-frauenland-video", "r-wohnraumvergabe", "r-reiseweltmeister", "r-arbeitsalltag"],
+        minWords: 140,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "nuance", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["reisen", "bananenrepublik", "wohnraum", "frauenland", "arbeitsalltag", "versorgung"],
+        rubric: [
+          { concept: "Alltag als historische Erfahrungsebene", keywords: ["alltag", "lebenswelt", "erfahrung", "praxis", "alltagsgeschichte"] },
+          { concept: "soziale Leistungen oder Stabilisierung", keywords: ["sicherheit", "betreuung", "arbeit", "wohnung", "versorgung"] },
+          { concept: "politische Steuerung oder Freiheitsgrenzen", keywords: ["kontrolle", "steuerung", "reise", "wahlfreiheit", "abhaengigkeit"] },
+          { concept: "Ambivalenz statt Verharmlosung", keywords: ["ambivalent", "nicht harmlos", "zugleich", "einerseits", "andererseits"] },
+          { concept: "Urteil zur Diktaturfrage", keywords: ["diktatur", "praeziser", "sichtbarer", "nicht milder", "herrschaft"] }
+        ],
+        modelAnswer:
+          "Alltagsgeschichte macht die DDR nicht einfach milder, sondern genauer. Sie zeigt, dass Diktatur nicht nur in Mauer und Stasi bestand, sondern auch in der politischen Regulierung von Wohnen, Reisen, Arbeit und Konsum. Gerade weil soziale Leistungen und praktische Sicherheiten mit Kontrolle, Mangel und Freiheitsgrenzen verbunden waren, wird die Herrschaftsform im Alltag oft präziser sichtbar."
       }
     ]
   },
@@ -930,34 +1192,31 @@ const MODULES = [
     questions: [
       {
         id: "q-herrschaft-1",
-        type: "single-choice",
+        type: "short-text",
         challenge: "Faktencheck",
         prompt:
-          "Welche Funktion hatte der Mauerbau vom 13. August 1961 aus Sicht der DDR-Führung real am ehesten?",
+          "Erkläre die reale Funktion des Mauerbaus vom 13. August 1961 aus Sicht der DDR-Führung.",
         help:
-          "Nicht die offizielle Selbstbeschreibung, sondern die tatsächliche Machtfunktion ist gefragt.",
+          "Nenne mindestens drei Aspekte: Fluchtstopp, Stabilisierung und Herrschaftssicherung.",
+        placeholder: "Die Mauer diente real vor allem dazu, ...",
         sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august"],
-        options: [
+        conceptGroups: [
           {
-            id: "a",
-            text: "Er sollte vor allem den Kontakt zwischen Ost- und Westberliner Kulturinstitutionen erleichtern."
+            label: "Stopp von Flucht oder Abwanderung",
+            variants: ["massenflucht", "abwanderung", "republikflucht", "flucht stoppen", "weggehen verhindern", "abfluss"]
           },
           {
-            id: "b",
-            text: "Er sollte die Massenflucht stoppen, die wirtschaftliche und politische Stabilität der DDR sichern und den Kontrollverlust beenden."
+            label: "wirtschaftliche oder demografische Stabilisierung",
+            variants: ["arbeitskraefte", "stabilisierung", "wirtschaft", "fachkraefte", "bevoelkerung", "verlust stoppen"]
           },
           {
-            id: "c",
-            text: "Er war ein weitgehend symbolisches Bauprojekt ohne alltagspraktische Folgen."
-          },
-          {
-            id: "d",
-            text: "Er wurde ausschließlich auf Wunsch der Westmächte errichtet."
+            label: "Herrschaftssicherung oder Kontrollgewinn",
+            variants: ["herrschaft", "kontrolle", "macht sichern", "sed", "regime stabilisieren", "kontrollverlust beenden"]
           }
         ],
-        correctOptionId: "b",
-        explanation:
-          "Die Mauer sollte die Abwanderung stoppen und damit Arbeitskräfte, politische Stabilität und Herrschaftssicherung garantieren. Die Formel vom 'antifaschistischen Schutzwall' verdeckte diese Funktion."
+        successThreshold: 3,
+        modelAnswer:
+          "Der Mauerbau sollte vor allem die Fluchtbewegung stoppen, den Verlust von Arbeitskräften und Fachpersonal eindämmen und damit die politische Stabilität des Regimes sichern. Die offizielle Schutzwall-Rhetorik verdeckte, dass sich die Maßnahme vor allem gegen die eigene Bevölkerung richtete."
       },
       {
         id: "q-herrschaft-2",
@@ -1020,23 +1279,45 @@ const MODULES = [
       },
       {
         id: "q-herrschaft-4",
-        type: "multi-select",
+        type: "drag-order",
         challenge: "Systemanalyse",
         prompt:
-          "Welche Elemente machten das Grenzregime der DDR auch jenseits der Berliner Mauer wirksam?",
+          "Ordne die Elemente so, dass aus Fluchtkrise ein gestuftes Herrschafts- und Repressionssystem wird.",
         help:
-          "Mehrere Antworten sind richtig. Gesucht ist das Zusammenspiel von Raum, Gewaltandrohung und Organisation.",
+          "Die Reihenfolge soll vom Problem über die äußere Abriegelung bis zur inneren Sanktion führen.",
         sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-nva"],
-        options: [
-          { id: "a", text: "Sperranlagen, Kontrollzonen und technische Abriegelung" },
-          { id: "b", text: "die Möglichkeit freier Ausreise auf Antrag ohne politische Folgen" },
-          { id: "c", text: "bewaffnete Sicherung und militärische Präsenz" },
-          { id: "d", text: "Abschreckung durch Bestrafung und die Drohung harter Konsequenzen" },
-          { id: "e", text: "ein rein symbolischer Charakter ohne Einfluss auf den Alltag der Bevölkerung" }
+        items: [
+          {
+            id: "fluchtkrise",
+            label: "Die anhaltende Fluchtbewegung setzt die DDR politisch und wirtschaftlich unter Druck.",
+            detail: "Das Regime erlebt einen offenen Verlust an Menschen und Glaubwürdigkeit."
+          },
+          {
+            id: "abriegelung",
+            label: "Mauer, Sperranlagen und Grenzräume schließen die direkte Fluchtmöglichkeit.",
+            detail: "Die äußere Abriegelung soll die offene Lücke des Systems schließen."
+          },
+          {
+            id: "militaer",
+            label: "Grenztruppen, bewaffnete Sicherung und militärische Präsenz machen das Regime durchsetzbar.",
+            detail: "Die Grenze wird nicht nur gebaut, sondern ständig bewacht und verteidigt."
+          },
+          {
+            id: "ueberwachung",
+            label: "Stasi und Informantennetz überwachen im Innern mögliche Abweichung und Opposition.",
+            detail: "Kontrolle endet nicht an der Grenze, sondern greift in die Gesellschaft hinein."
+          },
+          {
+            id: "haft",
+            label: "Verhör, Haft und Einschüchterung markieren die Sanktion bei offenem Widerstand.",
+            detail: "Repression erzeugt Abschreckung weit über einzelne Fälle hinaus."
+          }
         ],
-        correctOptionIds: ["a", "c", "d"],
+        correctOrder: ["fluchtkrise", "abriegelung", "militaer", "ueberwachung", "haft"],
         explanation:
-          "Das Grenzregime war nicht nur Bauwerk, sondern ein System aus Sperren, Bewaffnung, Überwachung und Abschreckung. Gerade diese Kombination machte Flucht so riskant."
+          "Aus der Fluchtkrise entstand kein bloßes Bauprojekt, sondern ein gestuftes System aus Abriegelung, militärischer Sicherung, innerer Überwachung und abschreckender Sanktion.",
+        modelAnswer:
+          "Das Herrschaftssystem reagierte auf Flucht zunächst mit äußerer Abriegelung und militärischer Sicherung. Es wurde aber erst vollständig wirksam, weil Überwachung und Haft auch im Innern Angst, Anpassung und Selbstzensur erzeugten."
       },
       {
         id: "q-herrschaft-5",
@@ -1095,6 +1376,64 @@ const MODULES = [
         ],
         modelAnswer:
           "Der Begriff Sicherheitsstaat beschreibt zwar die offizielle Selbstbegründung der DDR, reicht aber allein nicht aus. Denn die Sicherung richtete sich nicht nur gegen äußere Gefahren, sondern vor allem gegen die eigene Bevölkerung. Mauer, Stasi, politische Haft und umfassende Kontrolle sprechen deshalb dafür, die DDR präziser als Diktatur mit Sicherheitsrhetorik zu beschreiben."
+      },
+      {
+        id: "q-herrschaft-7",
+        type: "short-text",
+        challenge: "Begriffsarbeit",
+        prompt:
+          "Warum war die Formel 'antifaschistischer Schutzwall' eine irreführende politische Sprache?",
+        help:
+          "Nenne mindestens drei Aspekte: offizieller Feindbegriff, tatsächliche Funktion und propagandische Verschleierung.",
+        placeholder: "Die Formel war irreführend, weil ...",
+        sourceIds: ["r-berliner-mauer", "r-eingemauert", "r-ein-tag-im-august"],
+        conceptGroups: [
+          {
+            label: "offizielle Schutz- oder Feindrhetorik",
+            variants: ["schutzwall", "antifaschistisch", "feindbild", "westen", "offizielle sprache", "propaganda"]
+          },
+          {
+            label: "tatsächliche Funktion gegen die eigene Bevölkerung",
+            variants: ["eigene bevoelkerung", "flucht verhindern", "abriegelung", "nicht gegen faschisten", "weggehen verhindern", "republikflucht"]
+          },
+          {
+            label: "Verschleierung von Herrschaft und Repression",
+            variants: ["verschleiern", "repression", "herrschaft", "verdeckte funktion", "legitimieren", "propagandistisch"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Die Formel war irreführend, weil sie einen Schutz nach außen behauptete, obwohl die Mauer vor allem die eigene Bevölkerung am Weggehen hindern sollte. Der antifaschistische Begriff legitimierte die Maßnahme propagandistisch und verdeckte ihren eigentlichen Charakter als Instrument der Herrschaftssicherung."
+      },
+      {
+        id: "q-herrschaft-8",
+        type: "open-analysis",
+        challenge: "Vertiefung",
+        prompt:
+          "Prüfe, ob die DDR-Herrschaft nur auf Zwang beruhte oder ob sie zusätzlich auf Gewöhnung, Anpassung und begrenzter Zustimmung aufbaute.",
+        help:
+          "Die Antwort soll Zwang nicht relativieren, aber erklären, warum Diktaturen ohne Alltagsstabilisierung schwer dauerhaft funktionieren.",
+        placeholder: "Die DDR beruhte nicht nur auf Zwang, sondern auch auf ...",
+        teacherPrompt:
+          "Lass zuerst Zwangsinstrumente sammeln und danach überlegen, warum Herrschaft trotzdem mehr als blanke Gewalt braucht.",
+        commonPitfall:
+          "Manche Antworten verwechseln Anpassung mit Zustimmung oder machen aus sozialen Leistungen vorschnell eine Legitimation ohne Zwang.",
+        sourceIds: ["r-veb-horch-und-guck", "r-berliner-mauer", "r-stasi-gefaengnis", "r-nva"],
+        minWords: 140,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "nuance", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["stasi", "mauer", "haft", "kontrolle", "anpassung", "sicherheit"],
+        rubric: [
+          { concept: "Zwangs- und Repressionsmittel", keywords: ["mauer", "stasi", "haft", "grenze", "repression"] },
+          { concept: "Alltagsanpassung oder Gewöhnung", keywords: ["anpassung", "gewoehnung", "normalisierung", "alltag", "selbstzensur"] },
+          { concept: "Angst und Abschreckung", keywords: ["angst", "abschreckung", "druck", "einschuechterung", "verhoer"] },
+          { concept: "begrenzte Zustimmung oder Stabilisierung", keywords: ["zustimmung", "stabilisierung", "soziale sicherheit", "loyalitaet", "mitmachen"] },
+          { concept: "abwägendes Urteil", keywords: ["nicht nur", "zugleich", "einerseits", "andererseits", "insgesamt"] }
+        ],
+        modelAnswer:
+          "Die DDR-Herrschaft beruhte eindeutig auf Zwang, aber nicht ausschließlich darauf. Mauer, Stasi und Haft setzten klare Grenzen und erzeugten Angst. Zugleich funktionierte das System im Alltag auch über Gewöhnung, Anpassung und begrenzte Stabilisierung, etwa wenn Menschen aus Angst, Pragmatismus oder sozialer Absicherung mitgingen. Gerade diese Verbindung erklärt die Dauerhaftigkeit der Herrschaft genauer als ein reines Gewaltmodell."
       }
     ]
   },
@@ -1206,23 +1545,31 @@ const MODULES = [
     questions: [
       {
         id: "q-ostblock-1",
-        type: "multi-select",
+        type: "short-text",
         challenge: "Vergleich",
         prompt:
-          "Welche Muster verbinden 17. Juni 1953, Ungarn 1956, den Prager Frühling 1968 und die polnische Krise um Solidarnosc?",
+          "Beschreibe die gemeinsamen Grundmuster der Ostblockkrisen von 1953 bis 1981.",
         help:
-          "Mehrere Antworten sind richtig. Gesucht sind strukturelle Gemeinsamkeiten, nicht identische Verläufe.",
+          "Nenne mindestens drei Elemente: soziale und politische Forderungen, Blockkontrolle und Angst vor Ausstrahlung.",
+        placeholder: "Die Krisen ähneln sich darin, dass ...",
         sourceIds: ["r-17-juni-video", "r-ungarn-video", "r-prag-video", "r-solidarnosc-docx"],
-        options: [
-          { id: "a", text: "gesellschaftliche oder innerparteiliche Reform- und Beteiligungsforderungen stiessen an die Grenzen sowjetischer Blockkontrolle" },
-          { id: "b", text: "der Westen griff jedes Mal militärisch zugunsten der Protestierenden ein" },
-          { id: "c", text: "soziale Fragen verbanden sich oft mit politischen Forderungen nach Freiheit, Mitsprache oder Reformen" },
-          { id: "d", text: "die sowjetische Führung fürchtete ein Überspringen von Reformen auf andere Staaten des Ostblocks" },
-          { id: "e", text: "alle Bewegungen beendeten die kommunistische Herrschaft sofort und dauerhaft" }
+        conceptGroups: [
+          {
+            label: "soziale und politische Forderungen greifen ineinander",
+            variants: ["soziale forderungen", "politische forderungen", "mitsprache", "freiheit", "reform", "arbeiter"]
+          },
+          {
+            label: "Grenzen sowjetischer oder parteistaatlicher Blockkontrolle",
+            variants: ["sowjetisch", "blockkontrolle", "intervention", "partei", "niederschlagung", "kriegsrecht"]
+          },
+          {
+            label: "Angst vor Vorbildwirkung oder Dominoeffekt",
+            variants: ["vorbildwirkung", "dominoeffekt", "ueberspringen", "ansteckung", "andere staaten", "ausstrahlung"]
+          }
         ],
-        correctOptionIds: ["a", "c", "d"],
-        explanation:
-          "Gerade die Verbindung sozialer Krisen mit politischen Reformforderungen und die Angst vor einem Dominoeffekt erklären die Härte sowjetischer beziehungsweise staatssozialistischer Reaktionen."
+        successThreshold: 3,
+        modelAnswer:
+          "Die Ostblockkrisen verbanden meist soziale Missstände mit politischen Forderungen nach Mitsprache oder Reform. Sie stießen regelmäßig an die Grenzen sowjetischer oder parteistaatlicher Kontrolle, weil die Führung eine Ausstrahlung auf andere Länder fürchtete."
       },
       {
         id: "q-ostblock-2",
@@ -1303,22 +1650,40 @@ const MODULES = [
       },
       {
         id: "q-ostblock-4",
-        type: "single-choice",
-        challenge: "Einordnung",
+        type: "drag-order",
+        challenge: "Chronologie",
         prompt:
-          "Was unterschied Solidarnosc in Polen besonders von früheren Ostblockkrisen?",
+          "Ordne die vier Ostblockkrisen in ihre historische Reihenfolge ein.",
         help:
-          "Achte auf Breite, Organisationsform und gesellschaftliche Verankerung.",
+          "Ziehe die Karten vom frühesten zum spätesten Krisenfall.",
         sourceIds: ["r-solidarnosc-docx", "r-ungarn-video", "r-prag-video"],
-        options: [
-          { id: "a", text: "Solidarnosc war ausschließlich eine kleine innerparteiliche Reformgruppe ohne gesellschaftliche Basis." },
-          { id: "b", text: "Solidarnosc verband Arbeiterprotest, gesellschaftliche Selbstorganisation und politische Systemkritik in ungewöhnlicher Breite." },
-          { id: "c", text: "Solidarnosc wurde sofort militärisch vom Westen übernommen und gesteuert." },
-          { id: "d", text: "Solidarnosc wollte keinerlei Reformen, sondern nur höhere Löhne ohne politischen Bezug." }
+        items: [
+          {
+            id: "1953",
+            label: "17. Juni 1953 in der DDR",
+            detail: "Arbeitsnormen, Protestdynamik und sowjetische Niederschlagung."
+          },
+          {
+            id: "1956",
+            label: "Ungarnaufstand 1956",
+            detail: "Entstalinisierung, Revolte und sowjetische Intervention."
+          },
+          {
+            id: "1968",
+            label: "Prager Frühling 1968",
+            detail: "Reformsozialismus und Einmarsch der Warschauer-Pakt-Staaten."
+          },
+          {
+            id: "1980",
+            label: "Solidarnosc und Kriegsrecht in Polen 1980/81",
+            detail: "Massenbewegung, Selbstorganisation und staatssozialistische Krisenverwaltung."
+          }
         ],
-        correctOptionId: "b",
+        correctOrder: ["1953", "1956", "1968", "1980"],
         explanation:
-          "Solidarnosc war besonders, weil sie weit über eine spontane Protestwelle hinausging: als gesellschaftlich verankerte Bewegung verband sie soziale Forderungen, Selbstorganisation und politische Herausforderung des Systems."
+          "Die Krisen folgen aufeinander und markieren unterschiedliche Eskalationsstufen des Ostblocks: von Arbeiterprotest über nationale Revolte und Reformsozialismus bis zur breit organisierten Gesellschaftsbewegung.",
+        modelAnswer:
+          "Chronologisch beginnt die Krisengeschichte mit dem 17. Juni 1953, setzt sich über Ungarn 1956 und den Prager Frühling 1968 fort und erreicht mit Solidarnosc 1980/81 eine neue Breite gesellschaftlicher Selbstorganisation."
       },
       {
         id: "q-ostblock-5",
@@ -1377,6 +1742,64 @@ const MODULES = [
         ],
         modelAnswer:
           "Reformsozialismus konnte den Ostblock kaum stabilisieren, weil schon begrenzte Reformen die Grundfrage nach Macht, Freiheit und Kontrolle aufwarfen. Gerade der Prager Frühling zeigte, dass ein attraktiverer Sozialismus für Moskau nicht entlastend, sondern gefährlich wirkte. Auch spätere Krisen belegen, dass Reformen im Blocksystem schnell destabilisierend wurden, weil sie die monopolistische Herrschaft der Partei untergruben."
+      },
+      {
+        id: "q-ostblock-7",
+        type: "short-text",
+        challenge: "Vertiefung",
+        prompt:
+          "Warum griff der Westen in den Ostblockkrisen trotz öffentlicher Sympathie nicht militärisch ein?",
+        help:
+          "Nenne mindestens drei Gründe: Eskalationsrisiko, Einflusszonen und Grenzen westlicher Handlungsmöglichkeiten.",
+        placeholder: "Der Westen griff nicht militärisch ein, weil ...",
+        sourceIds: ["r-17-juni-video", "r-ungarn-video", "r-prag-video"],
+        conceptGroups: [
+          {
+            label: "Risiko eines großen Ost-West-Krieges",
+            variants: ["eskalation", "weltkrieg", "atomkrieg", "supermaechte", "zu gefaehrlich", "kriegsrisiko"]
+          },
+          {
+            label: "Anerkennung sowjetischer Einflusszonen oder Blockgrenzen",
+            variants: ["einflusszonen", "sowjetischer machtbereich", "ostblock", "blockgrenzen", "realpolitik", "moskau"]
+          },
+          {
+            label: "politische Unterstützung statt militärischer Hilfe",
+            variants: ["nur rhetorisch", "keine militaerische hilfe", "propaganda", "solidaritaet ohne eingriff", "begrenzte moeglichkeiten", "nicht eingreifen"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Der Westen griff nicht militärisch ein, weil das Risiko einer direkten Konfrontation der Supermächte zu groß war. Zudem galten die Ostblockstaaten faktisch als sowjetischer Einflussraum. Deshalb blieb es meist bei politischer Solidarität, Propaganda oder symbolischer Unterstützung."
+      },
+      {
+        id: "q-ostblock-8",
+        type: "open-analysis",
+        challenge: "Urteil",
+        prompt:
+          "Bewerte die These: 'Auch niedergeschlagene Krisen schwächten den Ostblock langfristig.' Nutze mindestens zwei Beispiele.",
+        help:
+          "Achte darauf, zwischen kurzfristigem Scheitern und langfristiger Wirkung zu unterscheiden.",
+        placeholder: "Die These überzeugt, weil ...",
+        teacherPrompt:
+          "Lass die Klasse zuerst zwischen unmittelbarem Ausgang und längerfristiger Wirkung unterscheiden, bevor geschrieben wird.",
+        commonPitfall:
+          "Häufig wird aus der Niederschlagung vorschnell geschlossen, die Krisen seien historisch folgenlos gewesen.",
+        sourceIds: ["r-17-juni-video", "r-ungarn-video", "r-prag-video", "r-solidarnosc-docx"],
+        minWords: 140,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "comparison", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["17. juni", "ungarn", "prager fruehling", "solidarnosc", "1989", "opposition"],
+        rubric: [
+          { concept: "kurzfristige Niederschlagung", keywords: ["niederschlagung", "intervention", "kriegsrecht", "gescheitert", "gewalt"] },
+          { concept: "langfristiger Legitimationsverlust", keywords: ["legitimation", "vertrauen", "delegitimierung", "glaubwuerdigkeit", "systemkrise"] },
+          { concept: "Erinnerung oder Lernprozess", keywords: ["erinnerung", "lernen", "opposition", "erfahrung", "spaetere bewegungen"] },
+          { concept: "Vergleich mehrerer Krisen", keywords: ["waehrend", "hingegen", "vergleich", "beide", "anders als"] },
+          { concept: "Urteil zur Langzeitwirkung", keywords: ["langfristig", "schwaechen", "vorbereiten", "vorgeschichte", "insgesamt"] }
+        ],
+        modelAnswer:
+          "Die Krisen wurden oft kurzfristig niedergeschlagen, schwächten den Ostblock aber langfristig. Jede Intervention oder Repressionsphase untergrub das Vertrauen in die Reformfähigkeit des Systems und schuf Erinnerungen, aus denen spätere Oppositionsbewegungen lernten. Gerade deshalb kann man 1989 nicht ohne 1953, 1956, 1968 und 1980/81 verstehen."
       }
     ]
   },
@@ -1497,34 +1920,31 @@ const MODULES = [
     questions: [
       {
         id: "q-wende-1",
-        type: "single-choice",
+        type: "short-text",
         challenge: "Faktencheck",
         prompt:
-          "Was unterschied die Lage von 1989 grundlegend von den früheren Ostblockkrisen?",
+          "Erkläre, was die Lage von 1989 grundlegend von früheren Ostblockkrisen unterschied.",
         help:
-          "Denke an Moskau, an Gewaltbereitschaft und an die Spielräume für Protestbewegungen.",
+          "Nenne mindestens drei Punkte: Moskau, Protestdynamik und Krise der SED.",
+        placeholder: "1989 war anders, weil ...",
         sourceIds: ["r-ddr-verwandeln", "r-herbst89-video"],
-        options: [
+        conceptGroups: [
           {
-            id: "a",
-            text: "Die sowjetische Führung war 1989 nicht mehr bereit, wie 1953, 1956 oder 1968 militärisch zur Blockdisziplin einzugreifen."
+            label: "veränderte sowjetische Haltung",
+            variants: ["gorbatschow", "moskau griff nicht ein", "keine intervention", "sowjetische zurueckhaltung", "1989 anders", "blockdisziplin zerbrach"]
           },
           {
-            id: "b",
-            text: "Die DDR war 1989 das wirtschaftlich stärkste und stabilste Land Europas."
+            label: "Massenproteste und Ausreisebewegung",
+            variants: ["massendemonstrationen", "ausreise", "massenexodus", "strassenprotest", "montagsdemonstrationen", "druck von unten"]
           },
           {
-            id: "c",
-            text: "Es gab 1989 weder Massenproteste noch Ausreisebewegungen."
-          },
-          {
-            id: "d",
-            text: "Die SED entschied sich frühzeitig und geschlossen für freie Wahlen."
+            label: "innere Krise oder Kontrollverlust der SED",
+            variants: ["sed krise", "kontrollverlust", "legitimationsverlust", "regime geschwaecht", "machtzerfall", "staat verlor kontrolle"]
           }
         ],
-        correctOptionId: "a",
-        explanation:
-          "Ohne die veränderte sowjetische Haltung unter Gorbatschow und ohne automatische Interventionsbereitschaft entstand überhaupt erst ein anderer Handlungsspielraum für Opposition und Massendemonstrationen."
+        successThreshold: 3,
+        modelAnswer:
+          "1989 unterschied sich grundlegend, weil Moskau nicht mehr automatisch militärisch eingriff, während Ausreisebewegung und Massendemonstrationen den Druck von unten massiv erhöhten. Gleichzeitig verlor die SED sichtbar an Kontrolle und Legitimation."
       },
       {
         id: "q-wende-2",
@@ -1611,23 +2031,40 @@ const MODULES = [
       },
       {
         id: "q-wende-4",
-        type: "multi-select",
+        type: "drag-order",
         challenge: "Dynamikanalyse",
         prompt:
-          "Welche Faktoren trugen besonders dazu bei, dass sich die Krise der DDR im Herbst 1989 so schnell zuspitzte?",
+          "Ordne die Entwicklung so, dass der Weg von der Oppositionsarbeit zur offenen Umbruchphase 1989/90 sichtbar wird.",
         help:
-          "Mehrere Antworten sind richtig. Achte auf Wechselwirkungen statt auf einen Einzelfaktor.",
+          "Die Karten sollen von der Vorarbeit in den 1980ern bis zur politischen Entscheidungslage 1990 führen.",
         sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke", "r-herbst89-video"],
-        options: [
-          { id: "a", text: "die Verbindung von Ausreisebewegung, Protesten und wachsendem Kontrollverlust der SED" },
-          { id: "b", text: "eine geschlossene und früh entschlossene Reformstrategie der SED-Führung" },
-          { id: "c", text: "die veränderte sowjetische Haltung, die militärische Intervention unwahrscheinlicher machte" },
-          { id: "d", text: "Opposition und Gegenöffentlichkeit, die Informationen und Kritik sichtbarer machten" },
-          { id: "e", text: "die vollständige politische Stabilität und hohe Legitimation des Regimes" }
+        items: [
+          {
+            id: "netzwerke",
+            label: "Oppositionsgruppen, Kirchenräume und Gegenöffentlichkeit halten Kritik in den 1980er Jahren lebendig.",
+            detail: "Noch klein, aber organisatorisch und kommunikativ wichtig."
+          },
+          {
+            id: "druck",
+            label: "Ausreisebewegung und wachsende Demonstrationen setzen das Regime im Herbst 1989 unter Druck.",
+            detail: "Krise und Protest verstärken sich gegenseitig."
+          },
+          {
+            id: "mauerfall",
+            label: "Der 9. November macht den Kontrollverlust der SED vor aller Augen sichtbar.",
+            detail: "Die Grenzöffnung verändert Dynamik und Erwartungen schlagartig."
+          },
+          {
+            id: "entscheidung",
+            label: "Im Frühjahr 1990 verdichten Wahlen und Verhandlungen die offene Lage in Richtung Einheit.",
+            detail: "Aus Revolution wird eine neue politische Entscheidungssituation."
+          }
         ],
-        correctOptionIds: ["a", "c", "d"],
+        correctOrder: ["netzwerke", "druck", "mauerfall", "entscheidung"],
         explanation:
-          "1989 eskalierte die Krise nicht wegen eines einzigen Auslösers, sondern durch das Zusammenwirken von Protest, Ausreise, Legitimationsverlust, Opposition und international veränderten Rahmenbedingungen."
+          "Die Umbruchphase entwickelte sich nicht schlagartig aus dem Nichts, sondern aus langer Vorarbeit, wachsendem Druck, offenem Kontrollverlust und anschließender politischer Neuordnung.",
+        modelAnswer:
+          "Auf die kleineren Oppositions- und Gegenöffentlichkeitsräume der 1980er Jahre folgten Ausreisebewegung und Massendemonstrationen, dann der Mauerfall als Symbol des Kontrollverlusts. Erst danach wurde 1990 in Wahlen und Verhandlungen über Richtung und Tempo der Einheit entschieden."
       },
       {
         id: "q-wende-5",
@@ -1686,6 +2123,64 @@ const MODULES = [
         ],
         modelAnswer:
           "Keine Einzelerklärung reicht völlig aus. 1989 begann stark als Bürgerrechts- und Oppositionsbewegung gegen die SED-Herrschaft, wurde aber durch Ausreise, Massenproteste und den Machtzerfall des Regimes dynamisiert. Mit dem Mauerfall und den Entwicklungen von 1990 gewann dann die Einheitsperspektive schnell an Gewicht. Am treffendsten ist deshalb eine Deutung, die Revolution, Regimezusammenbruch und Vereinigungsdynamik miteinander verbindet."
+      },
+      {
+        id: "q-wende-7",
+        type: "short-text",
+        challenge: "Vertiefung",
+        prompt:
+          "Welche Rolle spielten Kirchenräume, Gegenöffentlichkeit und oppositionelle Netzwerke vor dem Herbst 1989?",
+        help:
+          "Nenne mindestens drei Funktionen: Schutzraum, Vernetzung und Sichtbarkeit von Kritik.",
+        placeholder: "Diese Netzwerke waren wichtig, weil ...",
+        sourceIds: ["r-ddr-verwandeln", "r-siegbert-schefke"],
+        conceptGroups: [
+          {
+            label: "geschützte Räume für Diskussion und Organisation",
+            variants: ["schutzraum", "kirche", "treffpunkt", "raum fuer opposition", "versammlung", "nische"]
+          },
+          {
+            label: "Vernetzung oder Informationsaustausch",
+            variants: ["vernetzung", "informationen", "gegenoeffentlichkeit", "kontakte", "kommunikation", "sichtbar machen"]
+          },
+          {
+            label: "Vorbereitung späterer Proteste oder Gewaltfreiheit",
+            variants: ["vorbereitung", "spaetere proteste", "mobilisierung", "gewaltfrei", "demonstrationen", "opposition lernte"]
+          }
+        ],
+        successThreshold: 3,
+        modelAnswer:
+          "Kirchenräume und oppositionelle Netzwerke waren wichtig, weil sie geschützte Orte für Diskussion und Organisation boten. Sie ermöglichten Gegenöffentlichkeit, vernetzten Kritikerinnen und Kritiker und bereiteten spätere Protestformen organisatorisch und kulturell mit vor."
+      },
+      {
+        id: "q-wende-8",
+        type: "open-analysis",
+        challenge: "Deutung",
+        prompt:
+          "Erkläre, warum Gefühle wie Hoffnung, Angst, Euphorie und Unsicherheit für die Geschichtsschreibung von 1989/90 wichtig sind und nicht bloß 'Begleiterscheinungen' waren.",
+        help:
+          "Die Antwort soll zeigen, dass historische Entscheidungen auch aus offener Wahrnehmungslage heraus getroffen werden.",
+        placeholder: "Die Gefühle von 1989/90 sind historisch wichtig, weil ...",
+        teacherPrompt:
+          "Lass zunächst sammeln, welche Emotionen in den Materialien vorkommen, und frage dann, wie sie Handlungen beeinflussen.",
+        commonPitfall:
+          "Oft werden Gefühle nur erwähnt, aber nicht als Faktor für Offenheit, Tempo und politische Entscheidungen ernst genommen.",
+        sourceIds: ["r-wendegefuehle", "r-herbst89-video", "r-fruehling90-video", "r-ddr-verwandeln"],
+        minWords: 145,
+        structureExpectations: {
+          mandatory: ["thesis", "evidence", "nuance", "conclusion"],
+          targetHits: 5
+        },
+        sourceHints: ["wendegefuehle", "herbst 1989", "fruehling 1990", "opposition", "einheit"],
+        rubric: [
+          { concept: "offene historische Situation", keywords: ["offen", "ungewiss", "nicht festgelegt", "kontingenz", "unsicherheit"] },
+          { concept: "Gefühle als Handlungsfaktor", keywords: ["hoffnung", "angst", "euphorie", "verunsicherung", "motivation"] },
+          { concept: "Verbindung zu Protest, Ausreise oder Wahlentscheidungen", keywords: ["demonstrationen", "ausreise", "wahl", "protest", "entscheidung"] },
+          { concept: "Abgrenzung von teleologischer Rückschau", keywords: ["nicht zwangsläufig", "im rueckblick", "kein drehbuch", "nicht automatisch", "offenheit"] },
+          { concept: "historisches Urteil", keywords: ["deshalb", "wichtig", "zeigt", "insgesamt", "geschichtsschreibung"] }
+        ],
+        modelAnswer:
+          "Gefühle sind für 1989/90 historisch wichtig, weil sie zeigen, wie offen die Lage damals erlebt wurde. Hoffnung, Angst, Euphorie und Unsicherheit beeinflussten, ob Menschen protestierten, ausreisten, auf Reformen setzten oder schnelle Einheit wollten. Wer diese emotionale Lage ausblendet, deutet die Revolution im Rückblick zu geradlinig und verliert ihren offenen Charakter."
       }
     ]
   }

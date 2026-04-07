@@ -735,6 +735,59 @@ a {
   margin-top: 16px;
 }
 
+.drag-order {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.drag-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: grab;
+}
+
+.drag-card.dragging {
+  opacity: 0.55;
+  cursor: grabbing;
+  border-color: rgba(47, 93, 115, 0.28);
+}
+
+.drag-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(47, 93, 115, 0.12);
+  color: var(--cold);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.drag-copy strong {
+  display: block;
+}
+
+.drag-copy p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.drag-handle {
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
 .option-item {
   display: flex;
   gap: 10px;

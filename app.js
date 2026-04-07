@@ -264,6 +264,43 @@ function evaluateMultiSelect(question, selectedIds) {
   };
 }
 
+function evaluateDragOrder(question, orderedIds) {
+  const expectedOrder = question.correctOrder || [];
+  if (!orderedIds.length) {
+    return {
+      status: "error",
+      score: 0,
+      title: "Noch nicht sortiert",
+      body: "Ordne zuerst die Karten per Drag-and-drop.",
+      missing: [],
+      strengths: []
+    };
+  }
+
+  let correctPositions = 0;
+  const misplaced = [];
+  orderedIds.forEach((id, index) => {
+    if (expectedOrder[index] === id) {
+      correctPositions += 1;
+    } else {
+      const item = (question.items || []).find((entry) => entry.id === id);
+      if (item) misplaced.push(item.label);
+    }
+  });
+
+  const score = clamp(Math.round((correctPositions / expectedOrder.length) * 100));
+  const fullyCorrect = correctPositions === expectedOrder.length;
+
+  return {
+    status: fullyCorrect ? "success" : score >= 60 ? "warn" : "error",
+    score,
+    title: fullyCorrect ? "Chronologie stimmig" : score >= 60 ? "Teilweise stimmig" : "Reihenfolge noch unsicher",
+    body: question.explanation,
+    missing: fullyCorrect ? [] : misplaced.slice(0, 4).map((item) => `Noch prüfen: ${item}`),
+    strengths: fullyCorrect ? ["Die Abfolge ist historisch schlüssig geordnet."] : [`${correctPositions} von ${expectedOrder.length} Positionen stimmen bereits.`]
+  };
+}
+
 function evaluateShortText(question, answer) {
   const trimmed = answer.trim();
   if (!trimmed) {
@@ -392,6 +429,10 @@ function evaluateQuestion(question, userInput) {
     return evaluateMultiSelect(question, userInput.selectedIds || []);
   }
 
+  if (question.type === "drag-order") {
+    return evaluateDragOrder(question, userInput.orderedIds || []);
+  }
+
   if (question.type === "short-text") {
     return evaluateShortText(question, userInput.answerText || "");
   }
@@ -406,6 +447,7 @@ function isMastered(questionId) {
   if (!question) return false;
   if (question.type === "single-choice") return answer.result.score === 100;
   if (question.type === "multi-select") return answer.result.score >= 80;
+  if (question.type === "drag-order") return answer.result.score >= 80;
   return answer.result.score >= 68;
 }
 
@@ -446,6 +488,9 @@ function getTeacherSummary(question) {
   }
   if (question.type === "multi-select") {
     return "Prüft, ob mehrere historische Faktoren gleichzeitig erkannt und gegeneinander abgegrenzt werden.";
+  }
+  if (question.type === "drag-order") {
+    return "Prüft Chronologie, Strukturverständnis und die Fähigkeit, Ereignisse oder Entwicklungsschritte sinnvoll zu ordnen.";
   }
   if (question.type === "short-text") {
     return `Diagnose der Begriffsarbeit: ${question.conceptGroups.map((group) => group.label).join("; ")}.`;
@@ -729,6 +774,33 @@ function renderFeedback(result) {
   `;
 }
 
+function renderDragOrderField(question, answer) {
+  const savedOrder = answer?.userInput?.orderedIds || [];
+  const itemMap = new Map((question.items || []).map((item) => [item.id, item]));
+  const orderedItems = savedOrder.length
+    ? savedOrder.map((id) => itemMap.get(id)).filter(Boolean)
+    : question.items || [];
+
+  return `
+    <div class="drag-order" data-drag-question="${escapeHtml(question.id)}">
+      ${orderedItems
+        .map(
+          (item, index) => `
+            <div class="drag-card" draggable="true" data-drag-item-id="${escapeHtml(item.id)}">
+              <span class="drag-index">${index + 1}</span>
+              <div class="drag-copy">
+                <strong>${escapeHtml(item.label)}</strong>
+                ${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ""}
+              </div>
+              <span class="drag-handle" aria-hidden="true">⋮⋮</span>
+            </div>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function renderQuestionCard(question, index, resourceMap) {
   const answer = getAnswer(question.id);
   const sourceChips = renderSourceChips(question, resourceMap);
@@ -770,6 +842,8 @@ function renderQuestionCard(question, index, resourceMap) {
           .join("")}
       </div>
     `;
+  } else if (question.type === "drag-order") {
+    answerField = renderDragOrderField(question, answer);
   } else {
     const savedText = answer?.userInput?.answerText || "";
     const fieldClass = question.type === "open-analysis" ? "answer-field large" : "answer-field";
@@ -823,6 +897,55 @@ function renderQuestionCard(question, index, resourceMap) {
   `;
 }
 
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll(".drag-card:not(.dragging)")];
+
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child };
+      }
+      return closest;
+    },
+    { offset: Number.NEGATIVE_INFINITY, element: null }
+  ).element;
+}
+
+function activateDragAndDrop() {
+  elements.questionList.querySelectorAll("[data-drag-question]").forEach((container) => {
+    let dragged = null;
+
+    container.querySelectorAll(".drag-card").forEach((card) => {
+      card.addEventListener("dragstart", () => {
+        dragged = card;
+        card.classList.add("dragging");
+      });
+
+      card.addEventListener("dragend", () => {
+        card.classList.remove("dragging");
+        dragged = null;
+      });
+    });
+
+    container.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      if (!dragged) return;
+      const afterElement = getDragAfterElement(container, event.clientY);
+      if (!afterElement) {
+        container.appendChild(dragged);
+      } else if (afterElement !== dragged) {
+        container.insertBefore(dragged, afterElement);
+      }
+    });
+
+    container.addEventListener("drop", (event) => {
+      event.preventDefault();
+    });
+  });
+}
+
 function renderQuestions(module) {
   const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
   const unlocked = isModuleUnlocked(moduleIndex);
@@ -861,6 +984,8 @@ function renderQuestions(module) {
       if (target) target.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
   });
+
+  activateDragAndDrop();
 }
 
 function renderAudioLounge() {
@@ -893,6 +1018,13 @@ function collectUserInput(question) {
       (input) => input.value
     );
     return { selectedIds };
+  }
+
+  if (question.type === "drag-order") {
+    const orderedIds = Array.from(
+      document.querySelectorAll(`[data-drag-question="${question.id}"] [data-drag-item-id]`)
+    ).map((item) => item.dataset.dragItemId);
+    return { orderedIds };
   }
 
   const textarea = document.querySelector(`[data-question-text="${question.id}"]`);
