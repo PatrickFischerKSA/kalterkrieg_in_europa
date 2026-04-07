@@ -1,4 +1,5 @@
 const storageKey = "kalterkrieg-in-europa-progress";
+const teacherPassword = "kalter_krieg";
 const modules = window.COLD_WAR_MODULES || [];
 const audioItems = window.COLD_WAR_AUDIO || [];
 const structureSpec = {
@@ -11,6 +12,7 @@ const structureSpec = {
 
 const state = {
   activeModuleId: modules[0]?.id || null,
+  teacherAuthorized: false,
   teacherMode: false,
   answers: {}
 };
@@ -25,7 +27,12 @@ const elements = {
   audioLounge: document.getElementById("audio-lounge"),
   startRouteButton: document.getElementById("start-route-button"),
   openFirstOpenButton: document.getElementById("open-first-open-button"),
-  teacherModeButton: document.getElementById("teacher-mode-button")
+  teacherModeButton: document.getElementById("teacher-mode-button"),
+  teacherAuthLayer: document.getElementById("teacher-auth-layer"),
+  teacherAuthForm: document.getElementById("teacher-auth-form"),
+  teacherAuthCancel: document.getElementById("teacher-auth-cancel"),
+  teacherAuthStatus: document.getElementById("teacher-auth-status"),
+  teacherPasswordInput: document.getElementById("teacher-password")
 };
 
 function loadStore() {
@@ -33,17 +40,18 @@ function loadStore() {
     const raw = localStorage.getItem(storageKey);
     const parsed = raw ? JSON.parse(raw) : {};
     if (!parsed || typeof parsed !== "object") {
-      return { answers: {}, teacherMode: false };
+      return { answers: {}, teacherMode: false, teacherAuthorized: false };
     }
     if ("answers" in parsed || "teacherMode" in parsed) {
       return {
         answers: parsed.answers && typeof parsed.answers === "object" ? parsed.answers : {},
-        teacherMode: Boolean(parsed.teacherMode)
+        teacherMode: Boolean(parsed.teacherMode),
+        teacherAuthorized: Boolean(parsed.teacherAuthorized)
       };
     }
-    return { answers: parsed, teacherMode: false };
+    return { answers: parsed, teacherMode: false, teacherAuthorized: false };
   } catch {
-    return { answers: {}, teacherMode: false };
+    return { answers: {}, teacherMode: false, teacherAuthorized: false };
   }
 }
 
@@ -52,7 +60,8 @@ function saveStore() {
     storageKey,
     JSON.stringify({
       answers: state.answers,
-      teacherMode: state.teacherMode
+      teacherMode: state.teacherMode,
+      teacherAuthorized: state.teacherAuthorized
     })
   );
 }
@@ -93,6 +102,28 @@ function getModuleById(moduleId) {
 
 function getActiveModule() {
   return getModuleById(state.activeModuleId);
+}
+
+function getModuleScore(module) {
+  const questionCount = module.questions.length || 1;
+  const totalScore = module.questions.reduce((sum, question) => sum + (getAnswer(question.id)?.result?.score || 0), 0);
+  return totalScore / questionCount;
+}
+
+function isModuleUnlocked(moduleIndex) {
+  if (moduleIndex <= 0) return true;
+  const previousModule = modules[moduleIndex - 1];
+  return getModuleScore(previousModule) >= 60;
+}
+
+function getFirstLockedModuleIndex() {
+  return modules.findIndex((_, index) => !isModuleUnlocked(index));
+}
+
+function getFirstAvailableModuleId() {
+  const firstLocked = getFirstLockedModuleIndex();
+  if (firstLocked === -1) return modules[modules.length - 1]?.id || modules[0]?.id || null;
+  return modules[Math.max(0, firstLocked - 1)]?.id || modules[0]?.id || null;
 }
 
 function getAnswer(questionId) {
@@ -364,12 +395,13 @@ function buildStats() {
   const answered = allQuestions.filter((question) => Boolean(getAnswer(question.id)?.result));
   const mastered = allQuestions.filter((question) => isMastered(question.id));
   const masteredModules = modules.filter((module) => module.questions.every((question) => isMastered(question.id)));
+  const unlockedModules = modules.filter((module, index) => isModuleUnlocked(index));
   const averageScore = answered.length
     ? answered.reduce((sum, question) => sum + (getAnswer(question.id)?.result?.score || 0), 0) / answered.length
     : 0;
 
   return [
-    { label: "Stationen", value: `${masteredModules.length} / ${modules.length}` },
+    { label: "Freigeschaltet", value: `${unlockedModules.length} / ${modules.length}` },
     { label: "Fragen geloest", value: `${answered.length} / ${allQuestions.length}` },
     { label: "Sicher gemeistert", value: `${mastered.length}` },
     { label: "Durchschnitt", value: formatPercent(averageScore) }
@@ -404,19 +436,26 @@ function getTeacherSummary(question) {
 
 function renderModuleNav() {
   elements.moduleNav.innerHTML = modules
-    .map((module) => {
+    .map((module, index) => {
       const masteredCount = module.questions.filter((question) => isMastered(question.id)).length;
       const isActive = module.id === state.activeModuleId;
+      const score = getModuleScore(module);
+      const unlocked = isModuleUnlocked(index);
+      const previousModule = modules[index - 1];
       return `
-        <button class="module-button${isActive ? " active" : ""}" type="button" data-module-id="${escapeHtml(module.id)}">
+        <button class="module-button${isActive ? " active" : ""}${unlocked ? "" : " locked"}" type="button" data-module-id="${escapeHtml(module.id)}" ${unlocked ? "" : "disabled"}>
           <div>
             <span class="module-step">${escapeHtml(module.step)}</span>
             <h3>${escapeHtml(module.title)}</h3>
           </div>
           <p>${escapeHtml(module.intro)}</p>
           <div class="module-button-footer">
-            <span>${escapeHtml(module.era)}</span>
+            <span>${unlocked ? escapeHtml(module.era) : "gesperrt"}</span>
+            <span>${formatPercent(score)}</span>
+          </div>
+          <div class="module-button-footer">
             <span>${masteredCount}/${module.questions.length} gemeistert</span>
+            <span>${unlocked ? "freigeschaltet" : `ab 60 % in ${escapeHtml(previousModule?.title || "Station 1")}`}</span>
           </div>
         </button>
       `;
@@ -434,6 +473,9 @@ function renderModuleNav() {
 
 function renderModuleHeader(module) {
   const masteredCount = module.questions.filter((question) => isMastered(question.id)).length;
+  const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
+  const unlocked = isModuleUnlocked(moduleIndex);
+  const moduleScore = getModuleScore(module);
 
   elements.moduleHeader.innerHTML = `
     <div class="module-title-row">
@@ -445,6 +487,8 @@ function renderModuleHeader(module) {
           <span class="module-pill">${escapeHtml(module.era)}</span>
           <span class="module-pill">${module.resources.length} Materialien</span>
           <span class="module-pill">${masteredCount}/${module.questions.length} Fragen gemeistert</span>
+          <span class="module-pill">${formatPercent(moduleScore)} Modulscore</span>
+          <span class="module-pill">${unlocked ? "freigeschaltet" : "gesperrt"}</span>
         </div>
       </div>
       <aside class="module-meta-card">
@@ -568,6 +612,23 @@ function groupResources(resources) {
 }
 
 function renderResources(module) {
+  const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
+  const unlocked = isModuleUnlocked(moduleIndex);
+  if (!unlocked) {
+    const previousModule = modules[moduleIndex - 1];
+    elements.resourceGroups.innerHTML = `
+      <section class="resource-group">
+        <h3>Ressourcen noch gesperrt</h3>
+        <p class="module-copy">
+          Diese Station wird erst freigeschaltet, wenn du in
+          <strong>${escapeHtml(previousModule?.title || "der vorangehenden Station")}</strong>
+          mindestens 60 % erreichst.
+        </p>
+      </section>
+    `;
+    return;
+  }
+
   elements.resourceGroups.innerHTML = groupResources(module.resources)
     .map(([bucket, resources]) => {
       return `
@@ -744,6 +805,29 @@ function renderQuestionCard(question, index, resourceMap) {
 }
 
 function renderQuestions(module) {
+  const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
+  const unlocked = isModuleUnlocked(moduleIndex);
+  if (!unlocked) {
+    const previousModule = modules[moduleIndex - 1];
+    elements.questionList.innerHTML = `
+      <article class="question-card locked">
+        <div class="question-topline">
+          <div>
+            <span class="question-type">Freischaltung</span>
+            <h3>Naechste Station gesperrt</h3>
+          </div>
+          <div class="question-score">${formatPercent(getModuleScore(previousModule))}</div>
+        </div>
+        <p class="question-help">
+          Erreiche zuerst mindestens 60 % im vorangehenden Modul
+          <strong>${escapeHtml(previousModule?.title || "")}</strong>. Danach werden Fragen und
+          Materialien dieser Station automatisch freigeschaltet.
+        </p>
+      </article>
+    `;
+    return;
+  }
+
   const resourceMap = getResourceMap(module);
   elements.questionList.innerHTML = module.questions
     .map((question, index) => renderQuestionCard(question, index, resourceMap))
@@ -806,6 +890,8 @@ function evaluateAndStore(questionId) {
 
 function jumpToFirstOpenQuestion() {
   for (const module of modules) {
+    const moduleIndex = modules.findIndex((entry) => entry.id === module.id);
+    if (!isModuleUnlocked(moduleIndex)) continue;
     const question = module.questions.find((entry) => entry.type === "open-analysis");
     if (question) {
       state.activeModuleId = module.id;
@@ -819,10 +905,36 @@ function jumpToFirstOpenQuestion() {
   }
 }
 
+function openTeacherAuth() {
+  elements.teacherAuthLayer.classList.remove("hidden");
+  elements.teacherAuthLayer.setAttribute("aria-hidden", "false");
+  elements.teacherAuthStatus.textContent = "";
+  elements.teacherPasswordInput.value = "";
+  requestAnimationFrame(() => elements.teacherPasswordInput.focus());
+}
+
+function closeTeacherAuth() {
+  elements.teacherAuthLayer.classList.add("hidden");
+  elements.teacherAuthLayer.setAttribute("aria-hidden", "true");
+  elements.teacherAuthStatus.textContent = "";
+}
+
 function renderApp() {
+  const activeIndex = modules.findIndex((entry) => entry.id === state.activeModuleId);
+  if (activeIndex > -1 && !isModuleUnlocked(activeIndex)) {
+    state.activeModuleId = getFirstAvailableModuleId();
+  }
+
   const module = getActiveModule();
   if (!module) return;
-  elements.teacherModeButton.textContent = state.teacherMode ? "Lehrpersonenmodus an" : "Lehrpersonenmodus aus";
+  if (!state.teacherAuthorized) {
+    state.teacherMode = false;
+  }
+  elements.teacherModeButton.textContent = state.teacherMode
+    ? "Lehrpersonenmodus an"
+    : state.teacherAuthorized
+      ? "Lehrpersonenmodus aus"
+      : "Lehrer*innenzugang";
   elements.teacherModeButton.classList.toggle("is-active", state.teacherMode);
   renderStats();
   renderModuleNav();
@@ -841,12 +953,36 @@ elements.startRouteButton.addEventListener("click", () => {
 
 elements.openFirstOpenButton.addEventListener("click", jumpToFirstOpenQuestion);
 elements.teacherModeButton.addEventListener("click", () => {
+  if (!state.teacherAuthorized) {
+    openTeacherAuth();
+    return;
+  }
   state.teacherMode = !state.teacherMode;
   saveStore();
   renderApp();
 });
 
+elements.teacherAuthForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const value = elements.teacherPasswordInput.value.trim();
+  if (value !== teacherPassword) {
+    elements.teacherAuthStatus.textContent = "Passwort nicht korrekt.";
+    return;
+  }
+  state.teacherAuthorized = true;
+  state.teacherMode = true;
+  saveStore();
+  closeTeacherAuth();
+  renderApp();
+});
+
+elements.teacherAuthCancel.addEventListener("click", closeTeacherAuth);
+elements.teacherAuthLayer.querySelectorAll("[data-close-teacher-auth]").forEach((entry) => {
+  entry.addEventListener("click", closeTeacherAuth);
+});
+
 const persisted = loadStore();
 state.answers = persisted.answers;
 state.teacherMode = persisted.teacherMode;
+state.teacherAuthorized = persisted.teacherAuthorized;
 renderApp();

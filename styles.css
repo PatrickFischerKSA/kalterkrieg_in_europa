@@ -284,6 +284,11 @@ a {
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
+.module-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
 .module-button:hover,
 .module-button:focus-visible {
   transform: translateY(-1px);
@@ -293,6 +298,11 @@ a {
 .module-button.active {
   background: linear-gradient(135deg, rgba(47, 93, 115, 0.14), rgba(255, 255, 255, 0.78));
   border-color: rgba(47, 93, 115, 0.26);
+}
+
+.module-button.locked {
+  background: linear-gradient(135deg, rgba(28, 24, 21, 0.04), rgba(255, 255, 255, 0.76));
+  border-style: dashed;
 }
 
 .module-step {
@@ -514,6 +524,60 @@ a {
   margin: 0;
 }
 
+.auth-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+}
+
+.auth-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 24, 21, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.auth-panel {
+  position: relative;
+  z-index: 1;
+  width: min(92vw, 520px);
+  padding: 28px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.auth-form label {
+  font-weight: 700;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(53, 41, 32, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.auth-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.auth-status {
+  min-height: 1.5rem;
+  margin: 14px 0 0;
+  color: var(--wire);
+  font-weight: 700;
+}
+
 .section-head {
   display: flex;
   justify-content: space-between;
@@ -615,6 +679,10 @@ a {
 .question-card.mastered {
   border-color: rgba(47, 93, 115, 0.28);
   box-shadow: inset 0 0 0 1px rgba(47, 93, 115, 0.08);
+}
+
+.question-card.locked {
+  background: linear-gradient(135deg, rgba(28, 24, 21, 0.05), rgba(255, 255, 255, 0.62));
 }
 
 .question-topline {

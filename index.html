@@ -41,7 +41,7 @@
           <div class="hero-actions">
             <button class="btn primary" id="start-route-button" type="button">Mit Station 1 beginnen</button>
             <button class="btn ghost" id="open-first-open-button" type="button">Direkt zur ersten Transferfrage</button>
-            <button class="btn ghost" id="teacher-mode-button" type="button">Lehrpersonenmodus aus</button>
+            <button class="btn ghost" id="teacher-mode-button" type="button">Lehrer*innenzugang</button>
           </div>
         </div>
 
@@ -175,7 +175,39 @@
             <h3>Ohne Backend</h3>
             <p>Die Lernlandschaft braucht keinen Server und kann direkt ueber GitHub Pages laufen.</p>
           </article>
+          <article class="publish-card">
+            <h3>Freischaltung</h3>
+            <p>Das naechste Modul wird erst freigeschaltet, wenn im vorangehenden Modul mindestens 60 % erreicht sind.</p>
+          </article>
         </div>
+      </section>
+    </div>
+
+    <div class="auth-layer hidden" id="teacher-auth-layer" aria-hidden="true">
+      <div class="auth-backdrop" data-close-teacher-auth="true"></div>
+      <section class="auth-panel panel" aria-labelledby="teacher-auth-title">
+        <p class="eyebrow">Lehrer*innenzugang</p>
+        <h2 id="teacher-auth-title">Lehrpersonenmodus freischalten</h2>
+        <p class="module-copy">
+          Der Lehrpersonenmodus zeigt Diagnosehinweise, Fehlvorstellungen und Bewertungsaufschluessel.
+          Passwortgeschuetzt bleibt nur diese Zusatzansicht; die Lernlandschaft selbst bleibt offen.
+        </p>
+        <form id="teacher-auth-form" class="auth-form">
+          <label for="teacher-password">Passwort</label>
+          <input
+            id="teacher-password"
+            name="teacher-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Passwort eingeben"
+            required
+          />
+          <div class="auth-actions">
+            <button class="btn primary" type="submit">Freischalten</button>
+            <button class="btn ghost" type="button" id="teacher-auth-cancel">Abbrechen</button>
+          </div>
+        </form>
+        <p class="auth-status" id="teacher-auth-status" aria-live="polite"></p>
       </section>
     </div>
 
